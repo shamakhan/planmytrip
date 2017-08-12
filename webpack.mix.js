@@ -11,5 +11,21 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.webpackConfig({
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['env', 'react', 'react-hmre'],
+						}
+					}
+				}
+
+			]
+		}
+	})
+   .js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
