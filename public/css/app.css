@@ -8350,3 +8350,173 @@ button.close {
   }
 }
 
+html,
+body {
+  background-color: #fff;
+  color: #303030;
+  font-family: Poppins, sans-serif;
+  font-weight: 200;
+  height: 100%;
+  line-height: 1.8em;
+  margin-top: -10px;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Top image */
+
+.pimg {
+  margin: 0;
+  background-image: url("/images/travel1.jpeg");
+  min-height: 85%;
+  position: relative;
+  width: 100%;
+  opacity: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Middle Quote styling */
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: auto;
+  vertical-align: -0.4em;
+}
+
+.quote {
+  margin-left: 10%;
+  width: 80%;
+}
+
+/* Top links login and register */
+
+.top-right {
+  position: absolute;
+  top: 5%;
+  width: 100%;
+  right: 10px;
+}
+
+.links > a {
+  color: #000;
+  position: overlay;
+  padding: 0 20px;
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px #ffffff,0px 0px 10px #ffffff,0px 0px 15px #ffffff;
+}
+
+/* Site name middle */
+
+.mid-section {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+/*.mid-section-middle {
+                margin:auto;
+                width: 400px;
+            }*/
+
+.mid-section-middle {
+  width: 350px;
+  font-family: Poppins;
+  background-color: #303030;
+  font-weight: 600;
+  font-size: 2.5em;
+  color: #fff;
+  outline: 0.2em solid white;
+  outline-offset: 0.32em;
+  margin: auto;
+  padding: 5px 0px;
+}
+
+/* Places pictures */
+
+.place-images {
+  width: 100%;
+  height: 250px;
+}
+
+div.polaroid-text {
+  text-align: center;
+  padding: 10px 20px;
+}
+
+div.polaroid {
+  background-color: white;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 25px;
+}
+
+.infoRight {
+  width: 90%;
+  font-family: Poppins, sans-serif;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+.down-image {
+  margin: 0;
+  background-image: url("/images/travel2.jpeg");
+  min-height: 500px;
+  width: 100%;
+  opacity: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/*.info-mid h1{
+    
+    font-family: 'Helvetica Neue';
+    font-size: 80px;
+    font-weight: 2em;
+    letter-spacing: -1px;
+}
+.info-mid h2{
+    font-family: Poppins;
+    font-size: 60px;
+    font-weight: 1em;
+    letter-spacing: -1px;
+}*/
+
+.down-text h1 {
+  color: #fff;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 100px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+}
+
+@media (max-width: 450px) {
+  .mid-section-middle {
+    width: 90%;
+  }
+}
+

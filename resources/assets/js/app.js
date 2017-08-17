@@ -1,13 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React,{ Component } from 'react';
+import DownInfo from './components/downInfo';
+import PlacePictures from './components/PlacePictures';
+import MidParallax from './components/MidParallax';
 
+require('bootstrap-sass/assets/javascripts/bootstrap.min.js');
 
-class App extends React.Component {
+class App extends Component {
 
-	render() {
-		return <div> Hello </div>;
-	}
+	render(){
+		return (
+			<div className="App">
+				<PlacePictures />
+				<MidParallax />
+				<DownInfo /> 
+			</div>
+
+			);
+	} 
 }
 
-
-ReactDOM.render(<App />, document.querySelector('#app'));
+export default App;

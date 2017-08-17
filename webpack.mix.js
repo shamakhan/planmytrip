@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,19 +14,36 @@ let mix = require('laravel-mix');
 
 mix.webpackConfig({
 		module: {
-			rules: [
+			rules: [	
 				{
 					test: /\.js$/,
 					use: {
 						loader: 'babel-loader',
 						options: {
-							presets: ['env', 'react', 'react-hmre'],
+							presets: ['env', 'react'],
 						}
 					}
-				}
+				},
+				{
+					test: /\.css$/,
+					use: ['style-loader, sass-loader,less-loader, css-loader'],
+				},
+				{
+    				test: /\.(png|jpg)$/,
+    				loader: 'url?limit=25000'
+    			}
 
 			]
-		}
-	})
-   .js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+		},
+		plugins: [
+
+			new webpack.ProvidePlugin({
+				$: 'jquery',
+				jQuery: 'jquery',
+			})
+		]
+	});
+
+mix.react('resources/assets/js/index.js', 'public/js/app.js')
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .version();
