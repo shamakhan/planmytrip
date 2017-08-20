@@ -34187,6 +34187,10 @@ var _react = __webpack_require__("./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _categoryList = __webpack_require__("./resources/assets/js/categoryList.js");
+
+var _categoryList2 = _interopRequireDefault(_categoryList);
+
 function _interopRequireDefault(obj) {
 	return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -34212,17 +34216,58 @@ function _inherits(subClass, superClass) {
 var UserPlan = function (_Component) {
 	_inherits(UserPlan, _Component);
 
-	function UserPlan() {
+	function UserPlan(props) {
 		_classCallCheck(this, UserPlan);
 
-		return _possibleConstructorReturn(this, (UserPlan.__proto__ || Object.getPrototypeOf(UserPlan)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (UserPlan.__proto__ || Object.getPrototypeOf(UserPlan)).call(this, props));
+
+		_this.state = {
+			mySlider: 0,
+			userName: document.getElementById('userName').innerHTML.toUpperCase(),
+			city: 'Mumbai',
+			Categories: {
+				Mumbai: ["Beach", "Historical", "Family", "Temples"],
+				Paris: ["Historical", "Museums", "Architectural"],
+				London: ["Sites", "Museums", "Historical"],
+				NewYork: ["Historical", "Beach", "Clubs"]
+
+			}
+
+		};
+
+		_this.handleChange = _this.handleChange.bind(_this);
+		_this.displayCategories = _this.displayCategories.bind(_this);
+		_this.returnSlider = _this.returnSlider.bind(_this);
+		return _this;
 	}
 
 	_createClass(UserPlan, [{
+		key: 'handleChange',
+		value: function handleChange(event) {
+			var name = event.target.name;
+			var value = event.target.value;
+			if (name === 'city') {
+				this.setState({ city: value });
+				//document.getElementById('categoriesSlider').innerHTML=<CategoryList categories={this.state.Categories[value]} />
+				//this.displayCategories(value);
+			}
+		}
+	}, {
+		key: 'returnSlider',
+		value: function returnSlider(category) {
+			return;
+		}
+	}, {
+		key: 'displayCategories',
+		value: function displayCategories(val) {
+			console.log(val);
+			var l = this.state.Categories[val].length;
+			console.log(this.state.Categories[val][0]);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-
-			return _react2.default.createElement('h1', null, 'hello');
+			return _react2.default.createElement('div', null, _react2.default.createElement('h5', null, 'Hello  ', this.state.userName), _react2.default.createElement('hr', null), _react2.default.createElement('form', { className: 'form-horizontal' }, _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'city' }, 'Select a city:'), _react2.default.createElement('div', { className: 'col-sm-6' }, _react2.default.createElement('select', { className: 'form-control', name: 'city', onChange: this.handleChange }, _react2.default.createElement('option', { value: 'Mumbai' }, 'Mumbai'), _react2.default.createElement('option', { value: 'Paris' }, 'Paris'), _react2.default.createElement('option', { value: 'London' }, 'London'), _react2.default.createElement('option', { value: 'NewYork' }, 'New York')))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Please rate the categories to get your plan.'), _react2.default.createElement('div', { className: 'col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement(_categoryList2.default, { categories: this.state.Categories[this.state.city] }))))));
 		}
 	}]);
 
@@ -34230,6 +34275,165 @@ var UserPlan = function (_Component) {
 }(_react.Component);
 
 exports.default = UserPlan;
+
+/***/ }),
+
+/***/ "./resources/assets/js/category.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () {
+	function defineProperties(target, props) {
+		for (var i = 0; i < props.length; i++) {
+			var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+		}
+	}return function (Constructor, protoProps, staticProps) {
+		if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	};
+}();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) {
+	return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+	if (!(instance instanceof Constructor)) {
+		throw new TypeError("Cannot call a class as a function");
+	}
+}
+
+function _possibleConstructorReturn(self, call) {
+	if (!self) {
+		throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	}return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+	if (typeof superClass !== "function" && superClass !== null) {
+		throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var category = function (_Component) {
+	_inherits(category, _Component);
+
+	function category() {
+		_classCallCheck(this, category);
+
+		return _possibleConstructorReturn(this, (category.__proto__ || Object.getPrototypeOf(category)).apply(this, arguments));
+	}
+
+	_createClass(category, [{
+		key: "handleChange",
+		value: function handleChange(event) {
+			var value = event.target.value;
+			document.getElementById(this.props.category).innerHTML = value;
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement("div", { className: "col-lg-6 col-md-6 col-sm-8" }, " ", _react2.default.createElement("h4", null, this.props.category, " : ", _react2.default.createElement("span", { className: "label label-default", id: this.props.category }, "50"), " "), _react2.default.createElement("div", null, _react2.default.createElement("input", { name: this.props.category, className: "mySlider form-control", style: { margin: "0" }, type: "range", min: "0", max: "100", step: "1", onChange: this.handleChange.bind(this) })), _react2.default.createElement("br", null));
+		}
+	}]);
+
+	return category;
+}(_react.Component);
+
+exports.default = category;
+
+/***/ }),
+
+/***/ "./resources/assets/js/categoryList.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () {
+	function defineProperties(target, props) {
+		for (var i = 0; i < props.length; i++) {
+			var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+		}
+	}return function (Constructor, protoProps, staticProps) {
+		if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	};
+}();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _category = __webpack_require__("./resources/assets/js/category.js");
+
+var _category2 = _interopRequireDefault(_category);
+
+function _interopRequireDefault(obj) {
+	return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+	if (!(instance instanceof Constructor)) {
+		throw new TypeError("Cannot call a class as a function");
+	}
+}
+
+function _possibleConstructorReturn(self, call) {
+	if (!self) {
+		throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	}return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+	if (typeof superClass !== "function" && superClass !== null) {
+		throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var categoryList = function (_Component) {
+	_inherits(categoryList, _Component);
+
+	function categoryList() {
+		_classCallCheck(this, categoryList);
+
+		return _possibleConstructorReturn(this, (categoryList.__proto__ || Object.getPrototypeOf(categoryList)).apply(this, arguments));
+	}
+
+	_createClass(categoryList, [{
+		key: 'render',
+		value: function render() {
+
+			var categoryItems = void 0;
+			if (this.props.categories) {
+				categoryItems = this.props.categories.map(function (category) {
+					return _react2.default.createElement(_category2.default, { key: category, category: category });
+				});
+			}
+			return _react2.default.createElement('div', null, categoryItems);
+		}
+	}]);
+
+	return categoryList;
+}(_react.Component);
+
+exports.default = categoryList;
 
 /***/ }),
 
