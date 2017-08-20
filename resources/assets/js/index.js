@@ -1,8 +1,24 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import setupScrollReveal from './components/scrollEffect';
-import App from './app';
+import setupScrollReveal from './MainPage/components/scrollEffect';
 
 
-ReactDOM.render(<App/>,document.querySelector('#app'));
+import App from './MainPage/mainPage';
+import UserPlan from './UserPlan';
+
+
+
+if(document.querySelector('#mainpage')){
+ReactDOM.render(
+		<App />
+	,document.querySelector('#mainpage'));
+
 setupScrollReveal();
+}
+if(document.querySelector('#plan'))
+	{
+		ReactDOM.render(
+		<UserPlan />
+		,document.querySelector('#plan'));
+
+}

@@ -9,13 +9,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'PlanMyTrip') }}</title>
+        <link rel="shortcut icon" href="/images/logo.png" />
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-inverse navbar-static-top" style="padding-top: 15px;">
             <div class="container">
                 <div class="navbar-header">
 
@@ -28,9 +28,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Plan My Trip') }}
-                    </a>
+                    @yield('navbarBrand')
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -71,12 +69,13 @@
             </div>
         </nav>
 
+    <div id="app">
+        
+
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js')}}"></script>
 </body>
 </html>

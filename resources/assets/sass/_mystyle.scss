@@ -19,10 +19,9 @@ html, body {
         .pimg {
             margin:0;
   background-image: url("/images/travel1.jpeg");
-  min-height: 85%;
+  min-height: 500px;
   position: relative;
   width:100%;
-  opacity: 1;
   background-position:center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -55,8 +54,9 @@ blockquote:before {
 
 /* Top links login and register */
 .top-right {
+  z-index:10;
      position: absolute;
-    top:5%;
+    top:4%;
     width:100%;
    right: 10px;
                 
@@ -65,7 +65,7 @@ blockquote:before {
 .links > a {
    color: #000;
     position: overlay;
-    padding: 0 20px;
+    padding: 0 15px;
    font-size: 1.2em;
    font-weight: 600;
    letter-spacing: .1rem;
@@ -96,7 +96,7 @@ blockquote:before {
         font-size:2.5em;
         color:#fff;
 outline: 0.2em solid white;
-outline-offset: 0.32em; 
+outline-offset: 0.4em; 
 margin:auto;
             padding: 5px 0px;
 

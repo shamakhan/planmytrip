@@ -33641,7 +33641,7 @@ module.exports = function (module) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/app.js":
+/***/ "./resources/assets/js/MainPage/components/DownImage.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33650,83 +33650,146 @@ module.exports = function (module) {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () {
-	function defineProperties(target, props) {
-		for (var i = 0; i < props.length; i++) {
-			var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-		}
-	}return function (Constructor, protoProps, staticProps) {
-		if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	};
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
 }();
 
 var _react = __webpack_require__("./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _downInfo = __webpack_require__("./resources/assets/js/components/downInfo.js");
-
-var _downInfo2 = _interopRequireDefault(_downInfo);
-
-var _PlacePictures = __webpack_require__("./resources/assets/js/components/PlacePictures.js");
-
-var _PlacePictures2 = _interopRequireDefault(_PlacePictures);
-
-var _MidParallax = __webpack_require__("./resources/assets/js/components/MidParallax.js");
-
-var _MidParallax2 = _interopRequireDefault(_MidParallax);
-
 function _interopRequireDefault(obj) {
-	return obj && obj.__esModule ? obj : { default: obj };
+    return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _classCallCheck(instance, Constructor) {
-	if (!(instance instanceof Constructor)) {
-		throw new TypeError("Cannot call a class as a function");
-	}
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
 }
 
 function _possibleConstructorReturn(self, call) {
-	if (!self) {
-		throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	}return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
 }
 
 function _inherits(subClass, superClass) {
-	if (typeof superClass !== "function" && superClass !== null) {
-		throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-	}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
-__webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js");
+//import LoginForm from './LoginForm';
 
-var App = function (_Component) {
-	_inherits(App, _Component);
+var DownImage = function (_Component) {
+    _inherits(DownImage, _Component);
 
-	function App() {
-		_classCallCheck(this, App);
+    function DownImage() {
+        _classCallCheck(this, DownImage);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	}
+        return _possibleConstructorReturn(this, (DownImage.__proto__ || Object.getPrototypeOf(DownImage)).apply(this, arguments));
+    }
 
-	_createClass(App, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement('div', { className: 'App' }, _react2.default.createElement(_PlacePictures2.default, null), _react2.default.createElement(_MidParallax2.default, null), _react2.default.createElement(_downInfo2.default, null));
-		}
-	}]);
+    _createClass(DownImage, [{
+        key: "render",
+        value: function render() {
+            var imgStyle = {
+                height: "200px"
+            };
 
-	return App;
+            return _react2.default.createElement("div", null, _react2.default.createElement("br", null), _react2.default.createElement("div", { className: "down-image down-text text-center", style: imgStyle }, _react2.default.createElement("br", null), _react2.default.createElement("br", null), _react2.default.createElement("h1", null, "Get Your Travel Plan Now."), _react2.default.createElement("br", null), _react2.default.createElement("br", null), _react2.default.createElement("a", { type: "button", className: "btn btn-lg btn-info", href: "/login" }, "Login\xA0", _react2.default.createElement("span", { className: "glyphicon glyphicon-chevron-right" })), "\xA0\xA0\xA0\xA0", _react2.default.createElement("a", { type: "button", className: "btn btn-lg btn-info", href: "/register" }, "Register\xA0", _react2.default.createElement("span", { className: "glyphicon glyphicon-chevron-right" }))));
+        }
+    }]);
+
+    return DownImage;
 }(_react.Component);
 
-exports.default = App;
+exports.default = DownImage;
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/MidParallax.js":
+/***/ "./resources/assets/js/MainPage/components/HeaderSection.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+}();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var HeaderSection = function (_Component) {
+  _inherits(HeaderSection, _Component);
+
+  function HeaderSection() {
+    _classCallCheck(this, HeaderSection);
+
+    return _possibleConstructorReturn(this, (HeaderSection.__proto__ || Object.getPrototypeOf(HeaderSection)).apply(this, arguments));
+  }
+
+  _createClass(HeaderSection, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement("div", { className: "pimg" }, _react2.default.createElement("div", { className: "mid-section text-center" }, _react2.default.createElement("h1", { className: "mid-section-middle" }, "PlanMyTrip.Com")));
+    }
+  }]);
+
+  return HeaderSection;
+}(_react.Component);
+
+exports.default = HeaderSection;
+
+/***/ }),
+
+/***/ "./resources/assets/js/MainPage/components/MidParallax.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33800,7 +33863,7 @@ exports.default = MidParallax;
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/PlacePictures.js":
+/***/ "./resources/assets/js/MainPage/components/PlacePictures.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33875,7 +33938,7 @@ exports.default = PlacePictures;
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/downInfo.js":
+/***/ "./resources/assets/js/MainPage/components/downInfo.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33946,7 +34009,7 @@ exports.default = downInfo;
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/scrollEffect.js":
+/***/ "./resources/assets/js/MainPage/components/scrollEffect.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34005,6 +34068,171 @@ exports.default = setScrollReveal;
 
 /***/ }),
 
+/***/ "./resources/assets/js/MainPage/mainPage.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () {
+	function defineProperties(target, props) {
+		for (var i = 0; i < props.length; i++) {
+			var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+		}
+	}return function (Constructor, protoProps, staticProps) {
+		if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	};
+}();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _downInfo = __webpack_require__("./resources/assets/js/MainPage/components/downInfo.js");
+
+var _downInfo2 = _interopRequireDefault(_downInfo);
+
+var _PlacePictures = __webpack_require__("./resources/assets/js/MainPage/components/PlacePictures.js");
+
+var _PlacePictures2 = _interopRequireDefault(_PlacePictures);
+
+var _MidParallax = __webpack_require__("./resources/assets/js/MainPage/components/MidParallax.js");
+
+var _MidParallax2 = _interopRequireDefault(_MidParallax);
+
+var _DownImage = __webpack_require__("./resources/assets/js/MainPage/components/DownImage.js");
+
+var _DownImage2 = _interopRequireDefault(_DownImage);
+
+var _HeaderSection = __webpack_require__("./resources/assets/js/MainPage/components/HeaderSection.js");
+
+var _HeaderSection2 = _interopRequireDefault(_HeaderSection);
+
+function _interopRequireDefault(obj) {
+	return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+	if (!(instance instanceof Constructor)) {
+		throw new TypeError("Cannot call a class as a function");
+	}
+}
+
+function _possibleConstructorReturn(self, call) {
+	if (!self) {
+		throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	}return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+	if (typeof superClass !== "function" && superClass !== null) {
+		throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+__webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js");
+
+var App = function (_Component) {
+	_inherits(App, _Component);
+
+	function App() {
+		_classCallCheck(this, App);
+
+		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	}
+
+	_createClass(App, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement('div', null, _react2.default.createElement(_HeaderSection2.default, null), _react2.default.createElement('br', null), _react2.default.createElement(_PlacePictures2.default, null), _react2.default.createElement(_MidParallax2.default, null), _react2.default.createElement(_downInfo2.default, null), _react2.default.createElement(_DownImage2.default, null));
+		}
+	}]);
+
+	return App;
+}(_react.Component);
+
+exports.default = App;
+
+/***/ }),
+
+/***/ "./resources/assets/js/UserPlan.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () {
+	function defineProperties(target, props) {
+		for (var i = 0; i < props.length; i++) {
+			var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+		}
+	}return function (Constructor, protoProps, staticProps) {
+		if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	};
+}();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) {
+	return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+	if (!(instance instanceof Constructor)) {
+		throw new TypeError("Cannot call a class as a function");
+	}
+}
+
+function _possibleConstructorReturn(self, call) {
+	if (!self) {
+		throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	}return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+	if (typeof superClass !== "function" && superClass !== null) {
+		throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var UserPlan = function (_Component) {
+	_inherits(UserPlan, _Component);
+
+	function UserPlan() {
+		_classCallCheck(this, UserPlan);
+
+		return _possibleConstructorReturn(this, (UserPlan.__proto__ || Object.getPrototypeOf(UserPlan)).apply(this, arguments));
+	}
+
+	_createClass(UserPlan, [{
+		key: 'render',
+		value: function render() {
+
+			return _react2.default.createElement('h1', null, 'hello');
+		}
+	}]);
+
+	return UserPlan;
+}(_react.Component);
+
+exports.default = UserPlan;
+
+/***/ }),
+
 /***/ "./resources/assets/js/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34019,20 +34247,30 @@ var _reactDom = __webpack_require__("./node_modules/react-dom/index.js");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _scrollEffect = __webpack_require__("./resources/assets/js/components/scrollEffect.js");
+var _scrollEffect = __webpack_require__("./resources/assets/js/MainPage/components/scrollEffect.js");
 
 var _scrollEffect2 = _interopRequireDefault(_scrollEffect);
 
-var _app = __webpack_require__("./resources/assets/js/app.js");
+var _mainPage = __webpack_require__("./resources/assets/js/MainPage/mainPage.js");
 
-var _app2 = _interopRequireDefault(_app);
+var _mainPage2 = _interopRequireDefault(_mainPage);
+
+var _UserPlan = __webpack_require__("./resources/assets/js/UserPlan.js");
+
+var _UserPlan2 = _interopRequireDefault(_UserPlan);
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
+	return obj && obj.__esModule ? obj : { default: obj };
 }
 
-_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.querySelector('#app'));
-(0, _scrollEffect2.default)();
+if (document.querySelector('#mainpage')) {
+	_reactDom2.default.render(_react2.default.createElement(_mainPage2.default, null), document.querySelector('#mainpage'));
+
+	(0, _scrollEffect2.default)();
+}
+if (document.querySelector('#plan')) {
+	_reactDom2.default.render(_react2.default.createElement(_UserPlan2.default, null), document.querySelector('#plan'));
+}
 
 /***/ }),
 
