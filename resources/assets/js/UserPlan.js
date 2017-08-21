@@ -1,7 +1,21 @@
 import React, {Component} from 'react';
 import CategoryList from './categoryList';
+import {connect} from 'react-redux';
+import {fetchPlan} from './actions/planAction';
+
+// @connect((store) => {
+// 	return {
+// 		plan: store.plan.plan
+// 	}
+// })
 
 export default class UserPlan extends Component{
+	
+	// componentWillMount(){
+	// 	this.props.dispatch(fetchPlan());
+	// }
+
+
 constructor(props){
 	super(props);
 	this.state={

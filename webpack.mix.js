@@ -21,6 +21,7 @@ mix.webpackConfig({
 						loader: 'babel-loader',
 						options: {
 							presets: ['env', 'react'],
+							plugins: ['transform-object-rest-spread']
 						}
 					}
 				},
