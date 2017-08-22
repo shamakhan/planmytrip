@@ -9,7 +9,6 @@ import App from './MainPage/mainPage';
 import UserPlan from './UserPlan';
 
 
-
 if(document.querySelector('#mainpage')){
 ReactDOM.render(
 		<App />
@@ -20,7 +19,7 @@ setupScrollReveal();
 if(document.querySelector('#plan'))
 	{
 		ReactDOM.render(
-			<Provider store={store}>
+		<Provider store={store}>
 		<UserPlan />
 		</Provider>
 		,document.querySelector('#plan'));
