@@ -25,7 +25,7 @@ constructor(props){
 		setDate:{fromDate:moment(),toDate:moment().add(1,"days")},
 		mySlider:0,
 		userName:((_('userName').innerHTML).toUpperCase()),
-		city:'Mumbai',
+		city:'mumbai',
 		categoryRates:{"Family And Kids":50,"Leisure":50,"Religious Site":50,"Walking Area":50,"Entertainment":50,"Outdoors":50,"Landmark":50,"Historical Site":50},
 		Cities:['mumbai','paris','newyork','london','dubai'],
 		journeyDays:2
@@ -42,6 +42,8 @@ constructor(props){
 
 	this.getRankedCategories=this.getRankedCategories.bind(this);
 	this.getCategoryNames=this.getCategoryNames.bind(this);
+
+	this.handleDisplay=this.handleDisplay.bind(this);
 	// this.toggleCalendar=this.toggleCalendar.bind(this);
 }
 	
@@ -59,6 +61,11 @@ constructor(props){
 		//event.target.preventDefault();
 		let topCategory=this.getRankedCategories();
 		this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
+		//this.handleDisplay();
+	}
+
+	handleDisplay(plan){
+		console.log(plan);
 	}
 
 	getRankedCategories(){
@@ -136,10 +143,15 @@ journeyDays(fromD,toD){
 
 }
 
+componentWillReceiveProps(nextProps){
+		const newPlan=nextProps.plan;
+		if(newPlan !== this.props.plan){
+			this.handleDisplay(newPlan);
+		}
+	}
+
+
 	render() {
-		// const props= this.props;
-		// const {store} = this.context;
-		// const state=store.getState();
 
 		return (
 			<div>
@@ -153,11 +165,11 @@ journeyDays(fromD,toD){
 			<label className="control-label col-sm-4" htmlFor="city">City :</label>
 			<div className="col-sm-6 col-lg-4 col-md-5">
 				<select className="form-control" name="city" onChange={this.handleStateChange}> 
-					<option value="Mumbai">Mumbai</option>
-					<option value="Paris">Paris</option>
-					<option value="London">London</option>
-					<option value="NewYork">New York</option>
-					<option value="Dubai">Dubai</option>
+					<option value="mumbai">Mumbai</option>
+					<option value="paris">Paris</option>
+					<option value="london">London</option>
+					<option value="newyork">New York</option>
+					<option value="dubai">Dubai</option>
 				</select>
 			</div>
 			</div>

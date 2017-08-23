@@ -16,40 +16,45 @@ class PlanController extends Controller
 {
     public function createPlan(){
 
-        $topCategories = array();
+        $city =  Input::get('city');
+        $topCategories = json_decode(Input::get('topCategories'));
+        $days = Input::get('days');
+
+        //return $topCategories;
+        //$topCategories = $topCategories->toArray();
+        /*$topCategories = array();
         $topCategories[0] = "Outdoors";
         $topCategories[1] = "Historical Site";
         $topCategories[2] = "Entertainment";
         $topCategories[3] = "Religious Site";
-        $topCategories[4] = "Landmark";
-
-
-        $otherCategories[0] = "Architecture";
-        $otherCategories[1] = "Museum";
-        $otherCategories[2] = "Family And Kids";
+        $topCategories[4] = "Landmark";*/
 
         $generateQuery = new GenerateQuery();
 
-
-    	$locations = $generateQuery->orLikeQuery($topCategories)
+        if (empty($topCategories)){
+            $locations = $generateQuery->getAllLocations($city)
             ->get();
-        $locations = $locations->toArray();
+            $locations = $locations->toArray();
+        }else{
+            $locations = $generateQuery->orLikeQuery($city, $topCategories)
+                ->get();
+            $locations = $locations->toArray();
 
-        $locationsAppend = $generateQuery
-            ->notLikeQuery($topCategories)
-            ->get();
-        $locationsAppend = $locationsAppend->toArray();
+            $locationsAppend = $generateQuery
+                ->notLikeQuery($city, $topCategories)
+                ->get();
+            $locationsAppend = $locationsAppend->toArray();
 
-        $locations = array_merge($locations, $locationsAppend);
-
-    	$generatePlan = new GeneratePlan($locations);
+            $locations = array_merge($locations, $locationsAppend);
+        }
+        $generatePlan = new GeneratePlan($locations,$days);
         $generatePlan->createTripPlan();
 
-    	return $generatePlan->getTripPlan();
+        return $generatePlan->getTripPlan();
 
 
 
-    	//return $locations;
+        //return $locations;
         //$redisOp = new RedisOperations();
         //$redisOp->setHash("pariscountry", 2321, 100);
         //$user = $redisOp->getHash("pariscountry");
@@ -69,13 +74,22 @@ class PlanController extends Controller
         $locations = location::select('name', 'latitude', 'longitude')->limit(10)->get();
         return $locations;
         return $pop->readFromRedis()[0]["distance"];*/
-	}
+    }
 
-	public function getCategories(){
+    public function getCategories(){
 
         $city =  Input::get('city');
         $catOp = new CategoriesOpertations();
 
         return $catOp->getTopCategories($city);
+    }
+
+    public function getThumbnails(){
+        $city =  Input::get('city');
+        $locations = new location();
+        $thumbnails = $locations->select('id', 'name', 'image', 'description')
+            ->limit(4)
+            ->get();
+        return $thumbnails->toArray();
     }
 }

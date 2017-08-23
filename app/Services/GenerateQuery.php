@@ -5,8 +5,10 @@ use App\location;
 
 class GenerateQuery
 {
-    public function likeQuery($categories){
-        $query = location::select('*');
+    public function likeQuery($city, $categories){
+        $locations = new location();
+        $locations->setTable($city);
+        $query = $locations->select('*');
 
             for($i=0; $i<sizeof($categories); $i++){
                 $query->where('categories', 'like', '%'.$categories[$i].'%');
@@ -16,8 +18,10 @@ class GenerateQuery
     }
 
 
-    public function notLikeQuery($categoriesNotLike){
-        $query = location::select('*');
+    public function notLikeQuery($city, $categoriesNotLike){
+        $locations = new location();
+        $locations->setTable($city);
+        $query = $locations->select('*');
 
         for($i=0; $i<sizeof($categoriesNotLike); $i++){
             $query->where('categories', 'not like', '%'.$categoriesNotLike[$i].'%');
@@ -27,11 +31,13 @@ class GenerateQuery
     }
 
 
-    public function likeNotLikeQuery($categoryLike, $categoriesNotLike){
-            $query = location::select('*');
+    public function likeNotLikeQuery($city, $categoryLike, $categoriesNotLike){
+        $locations = new location();
+        $locations->setTable($city);
+        $query = $locations->select('*');
 
 
-                $query->where('categories', 'like', '%'.$categoryLike.'%');
+        $query->where('categories', 'like', '%'.$categoryLike.'%');
 
             for ($i=0; $i<sizeof($categoriesNotLike); $i++){
                 $query->where('categories', 'not like', '%'.$categoriesNotLike[$i].'%');
@@ -40,16 +46,27 @@ class GenerateQuery
         return $query;
     }
 
-    public function orLikeQuery($categories){
+    public function orLikeQuery($city, $categories){
 
-            $query = location::select('*');
-            $query->where('categories', 'like', '%'.$categories[0].'%');
+        $locations = new location();
+        $locations->setTable($city);
+        $query = $locations->select('*');
+        $query->where('categories', 'like', '%'.$categories[0].'%');
 
-            for ($i=1; $i<sizeof($categories); $i++){
-                $query->orWhere('categories', 'like', '%'.$categories[$i].'%');
-            }
-            $query->orderBy('rating', 'desc');
+        for ($i=1; $i<sizeof($categories); $i++){
+            $query->orWhere('categories', 'like', '%'.$categories[$i].'%');
+        }
+        $query->orderBy('rating', 'desc');
 
-        return$query;
+        return $query;
+    }
+
+    public function getAllLocations($city){
+        $locations = new location();
+        $locations->setTable($city);
+        $query = $locations->select('*');
+        $query->orderBy('rating', 'desc');
+
+        return $query;
     }
 }

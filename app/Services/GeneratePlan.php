@@ -10,15 +10,17 @@ class GeneratePlan
     private $locations = array();
     private $completePlan = array();
     private $locationPlan = array();
+    private $totDays = null;
 
-    public function __construct($locations){
+    public function __construct($locations, $totDays){
 
-   	$this->locations = $locations;
+    $this->locations = $locations;
+    $this->totDays = (int)$totDays;
    }
 
    public function getTripPlan(){
 
-   		return $this->completePlan;
+      return $this->completePlan;
    }
 
 
@@ -43,7 +45,7 @@ class GeneratePlan
 
         //$travelTime->getTravelTime("dsa", "das", "sad");
 
-       while($days<10 && !empty($this->locations)){
+       while($days<$this->totDays && !empty($this->locations)){
 
 
            $this->resetDayPlan();
@@ -65,30 +67,30 @@ class GeneratePlan
 
 
 
-   			if (!$firstLocFound) {
-   				for($i=0; $i<$locationsToCheck; $i++){
-   					if($timeOp->inBetween($currentTime, $this->locations[$i]["timePreferred"], timePreferred)){
+        if (!$firstLocFound) {
+          for($i=0; $i<$locationsToCheck; $i++){
+            if($timeOp->inBetween($currentTime, $this->locations[$i]["timePreferred"], timePreferred)){
 
                         $this->addToDayPlan($this->locations[$i], $currentTime);
-   						$locationPlanIndex++;
-   						$currentTime += $this->getRequiredTime($i);
+              $locationPlanIndex++;
+              $currentTime += $this->getRequiredTime($i);
 
-   						$this->deleteFromLocations($i);
-   						$firstLocFound = true;
+              $this->deleteFromLocations($i);
+              $firstLocFound = true;
 
-   						break;
+              break;
 
-   					}
-   				}
+            }
+          }
 
-   				if (!$firstLocFound) {							//still not found
-   					for($i=0; $i<$locationsToCheck; $i++){
+          if (!$firstLocFound) {              //still not found
+            for($i=0; $i<$locationsToCheck; $i++){
 
-   						if($timeOp->inBetween($currentTime, $this->locations[$i]["timeOpen"], timeOpen)){
+              if($timeOp->inBetween($currentTime, $this->locations[$i]["timeOpen"], timeOpen)){
 
                             $this->addToDayPlan($this->locations[$i], $currentTime);
-   						    $locationPlanIndex++;
-   						    $currentTime += $this->getRequiredTime($i);
+                  $locationPlanIndex++;
+                  $currentTime += $this->getRequiredTime($i);
 
                             $this->deleteFromLocations($i);
                             $firstLocFound = true;
@@ -96,26 +98,26 @@ class GeneratePlan
 
                             break;
 
-   						}
+              }
 
-   						if ($i == $locationsToCheck - 1 && !$currentTime10) {
-   							$i = -1;
-   							$currentTime += 1;
-   							$currentTime10 = true;
-   							$locationsToCheck = sizeof($this->locations);
-   						}
-   					}
-   				}
-   			}
+              if ($i == $locationsToCheck - 1 && !$currentTime10) {
+                $i = -1;
+                $currentTime += 1;
+                $currentTime10 = true;
+                $locationsToCheck = sizeof($this->locations);
+              }
+            }
+          }
+        }
 
 
-   			//first location found
+        //first location found
 
-   			$locationsToCheck = MAXLOCATIONSTOCHECK;
+        $locationsToCheck = MAXLOCATIONSTOCHECK;
 
-   			while ($currentTime < TOTALTIME) {
+        while ($currentTime < TOTALTIME) {
 
-   			    for ($i=0; $i<sizeof($this->locations); $i++){//first location that is open at the current time
+            for ($i=0; $i<sizeof($this->locations); $i++){//first location that is open at the current time
                     if($timeOp->inBetween($currentTime, $this->locations[$i]["timeOpen"], timeOpen)){
                         $nextLocationToGo = $this->locations[$i];
                         $nextLocationToGoIndex = $i;
@@ -124,28 +126,28 @@ class GeneratePlan
                 }
 
                 $currentLocation = $this->locationPlan[sizeof($this->locationPlan)-1];
-   				for($i=1; $i<$locationsToCheck; $i++){
+          for($i=1; $i<$locationsToCheck; $i++){
 
-   				    //var_dump($this->locationPlan);
+              //var_dump($this->locationPlan);
 
-   					if($distanceOp->minDistanceLocation($currentLocation, $nextLocationToGo, $this->locations[$i], $currentTime) > 0){
-   						$nextLocationToGo = $this->locations[$i];
-   						$nextLocationToGoIndex = $i;
-   					}
+            if($distanceOp->minDistanceLocation($currentLocation, $nextLocationToGo, $this->locations[$i], $currentTime) > 0){
+              $nextLocationToGo = $this->locations[$i];
+              $nextLocationToGoIndex = $i;
+            }
 
-   				}
+          }
 
-   				$currentTravelTime = $timeOp->getTravelTime($currentLocation, $nextLocationToGo);
-   				$currentTime += $currentTravelTime;
-   				round($currentTime, 2);
+          $currentTravelTime = $timeOp->getTravelTime($currentLocation, $nextLocationToGo);
+          $currentTime += $currentTravelTime;
+          round($currentTime, 2);
                 //$currentTime += 1; //travelling
                 $this->addToDayPlan($nextLocationToGo, $currentTime);
-   				$locationPlanIndex++;
-   				$currentTime += $this->getRequiredTime($nextLocationToGoIndex);
+          $locationPlanIndex++;
+          $currentTime += $this->getRequiredTime($nextLocationToGoIndex);
 
 
-   				if(!$lunchDone){ //!$lunchDone
-   							if ($currentTime >= MAXTIMENOLUNCH) {
+          if(!$lunchDone){ //!$lunchDone
+                if ($currentTime >= MAXTIMENOLUNCH) {
 
                                 $currentTime1 = $currentTime;
                                 $currentTime1 -= $this->getRequiredTime($nextLocationToGoIndex);
@@ -154,35 +156,35 @@ class GeneratePlan
                                 round($currentTime1, 2);
 
 
-   							    $this->addLunchToDayPlan($currentTime1);
-   								$locationPlanIndex++;
+                    $this->addLunchToDayPlan($currentTime1);
+                  $locationPlanIndex++;
                                 //echo $currentTime."sdasd";
-   								$currentTime += LUNCHTIME;
-   								$lunchDone = true;
+                  $currentTime += LUNCHTIME;
+                  $lunchDone = true;
 
-   							}
-   						}else if($currentTime > TOTALTIME){
-   							$this->deleteLastLocationFromDayPlan();
-   							//echo "\n\n\n".$this->locations[$i]."\n\n\n";
+                }
+              }else if($currentTime > TOTALTIME){
+                $this->deleteLastLocationFromDayPlan();
+                //echo "\n\n\n".$this->locations[$i]."\n\n\n";
                             //$currentTime -= $currentTravelTime; //travelling
                             //round($currentTime, 2);
                             //$currentTime -= $this->getRequiredTime($i);
 
-   							break;
+                break;
 
-   						}
+              }
                 $this->deleteFromLocations($nextLocationToGoIndex);
 
-   			}
+        }
 
-   			//day change
+        //day change
            //echo "\n\n\n";
 
            $this->setDayPlan($this->locationPlan);
            $days++;
 
-   		}
-   		
+      }
+      
    }
 
    private function deleteFromLocations($index){

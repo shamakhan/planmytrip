@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 export function fetchPlan(city,topCategories,days){
+	let temp=JSON.stringify(topCategories);
 	return function(dispatch){
-		axios.get("/home/plan?city="+city+"&topCategories="+topCategories+"&days="+days)
+		axios.get("/home/plan?city="+city+"&topCategories="+temp+"&days="+days)
 		.then((response) => {
 			dispatch({type:"FETCH_PLAN_FULFILLED", payload:response.data});
 		})
