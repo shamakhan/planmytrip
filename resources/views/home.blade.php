@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="container">
-    <br/><br /><br />
 
     <div id="plan"></div>
 </div>

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export function fetchPlan(){
+export function fetchPlan(city,topCategories,days){
 	return function(dispatch){
-		axios.get("/generateplan")
+		axios.get("/home/plan?city="+city+"&topCategories="+topCategories+"&days="+days)
 		.then((response) => {
 			dispatch({type:"FETCH_PLAN_FULFILLED", payload:response.data});
 		})

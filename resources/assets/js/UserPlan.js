@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import CategoryList from './categoryList';
-import {fetchPlan} from './PlanPage/actions/planAction';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchPlan} from './PlanPage/actions/planAction';
 
 
 
@@ -23,8 +26,9 @@ constructor(props){
 		mySlider:0,
 		userName:((_('userName').innerHTML).toUpperCase()),
 		city:'Mumbai',
-		Categories:['mumbai','paris','newyork','london','dubai'],
-		journeydays:2
+		categoryRates:{"Family And Kids":50,"Leisure":50,"Religious Site":50,"Walking Area":50,"Entertainment":50,"Outdoors":50,"Landmark":50,"Historical Site":50},
+		Cities:['mumbai','paris','newyork','london','dubai'],
+		journeyDays:2
 		
 	}
 
@@ -32,10 +36,59 @@ constructor(props){
 		this.handleToDateChange=this.handleToDateChange.bind(this);
 	this.handleStateChange=this.handleStateChange.bind(this);
 	this.journeyDays=this.journeyDays.bind(this);
+	this.setCategoryRates=this.setCategoryRates.bind(this);
+
+	this.handleSubmit=this.handleSubmit.bind(this);
+
+	this.getRankedCategories=this.getRankedCategories.bind(this);
+	this.getCategoryNames=this.getCategoryNames.bind(this);
 	// this.toggleCalendar=this.toggleCalendar.bind(this);
 }
+	
+	getCategoryNames(categoryList){
+		let keys=Object.keys(this.state.categoryRates);
+		let arr=this.state.categoryRates;
+		let temp={};
+		for(let i=0;i<8;i++){
+			temp[categoryList[i]]=arr[keys[i]];
+		}
+		this.setState({categoryRates:temp});
+	}
+
+	handleSubmit(){
+		//event.target.preventDefault();
+		let topCategory=this.getRankedCategories();
+		this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
+	}
+
+	getRankedCategories(){
+		let sortable=[];
+		let arr=this.state.categoryRates;
+		for(let cat in arr){
+			if(arr[cat]>=60){
+				sortable.push([cat,arr[cat]]);
+			}
+		}
+		sortable.sort(function(a,b){
+			return b[1]-a[1];
+		});
+
+		for(let i=0;i<sortable.length;i++){
+			sortable[i]=sortable[i][0];
+		}
+		return sortable;
 
 
+		// this.state.categoryRates.sort(function(a,b){return a[1]-b[1];});
+		// 		console.log(this.state.categoryRates);
+		// return 
+
+	}
+
+	setCategoryRates(rate,category){
+		let temp=this.state.categoryRates;
+		temp[category]=parseInt(rate);
+		this.setState({categoryRates:temp});	}
 	
 
 	handleStateChange(event){
@@ -51,7 +104,7 @@ constructor(props){
 
 		let arr=this.state.setDate;
 			if((this.state.setDate.toDate.diff(date,'days'))<0){
-				arr.fromDate=this.state.setDate.toDate;
+				arr.fromDate=date;
 				arr.toDate=date;
 			}
 			else{
@@ -61,17 +114,17 @@ constructor(props){
   this.journeyDays(arr.fromDate,arr.toDate);
 }
 handleToDateChange (date) {
-			let arr=this.state.setDate;
+			let temparr=this.state.setDate;
 	if((this.state.setDate.fromDate.diff(date,'days'))>0)
 	{
-		arr.toDate=this.state.setDate.fromDate;
-		arr.fromDate=date;
+		temparr.toDate=date;
+		temparr.fromDate=date;
 	}
 	else{
-		arr.toDate=date;
+		temparr.toDate=date;
 	}
-  this.setState({setDate: arr});
-  this.journeyDays(arr.fromDate,arr.toDate);
+  this.setState({setDate: temparr});
+  this.journeyDays(temparr.fromDate,temparr.toDate);
 }
 // toggleCalendar (e) {
 //   e && e.preventDefault()
@@ -79,7 +132,7 @@ handleToDateChange (date) {
 // }
 journeyDays(fromD,toD){
 	let temp=toD.diff(fromD,'days')+1;
-	this.setState({journeydays:temp});
+	this.setState({journeyDays:temp});
 
 }
 
@@ -113,7 +166,7 @@ journeyDays(fromD,toD){
 			<label className="control-label col-sm-4" htmlFor="mySlider">Rate Categories :</label>
 			<div className="col-sm-8">
 				<div className="row">
-			<CategoryList city={this.state.city.toLowerCase()}/>
+			<CategoryList setCategoryRates={this.setCategoryRates} getCategoryNames={this.getCategoryNames} city={this.state.city.toLowerCase()}/>
 			</div>
 			</div>
 			</div>
@@ -132,7 +185,7 @@ journeyDays(fromD,toD){
 			<div style={{display:"inline"}}><DatePicker id="toDate" dateFormat="DD/MM/YYYY" selectsEnd selected={this.state.setDate.toDate}  startDate={this.state.setDate.fromDate}
     endDate={this.state.setDate.toDate} onChange={this.handleToDateChange} /></div>
 
-			</div><div className="col-sm-2"><h3><span className='label label-primary'>{this.state.journeydays} days</span></h3></div>
+			</div><div className="col-sm-2"><h3><span className='label label-primary' id="journeyDays">{this.state.journeyDays} days</span></h3></div>
 			</div>
 			</div>
 
@@ -140,7 +193,7 @@ journeyDays(fromD,toD){
 			<div className="row">
 				<div className="col-lg-4 col-sm-4 col-md-4"></div>
 				<div className="col-lg-8 col-sm-8 col-md-8 text-center">
-				<input type="submit" className="btn btn-primary" value="Generate Plan!"/>
+				<input type="button" onClick={this.handleSubmit} className="btn btn-primary" value="Generate Plan!"/>
 				<br />
 				</div>
 			</div> 
@@ -162,7 +215,18 @@ function _(id){
 	return document.getElementById(id);
 }
 
-export default UserPlan;
+function mapStateToProps(state){ 
+	return{
+		plan: state.plan.plan
+	};
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({fetchPlan:fetchPlan},dispatch);
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(UserPlan);
 
 //UserPlan =connect()(UserPlan);
 

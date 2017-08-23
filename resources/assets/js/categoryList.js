@@ -9,39 +9,46 @@ import {connect} from 'react-redux';
 class categoryList extends Component {
 	constructor(props){
 		super(props);
-		this.state={
-			catRates:{1:50,2:50,3:50,4:50,5:50,6:50,7:50,8:50}
-		}
-		this.setCategoryRate=this.setCategoryRate.bind(this);
+		
 	}
 
 	
 
-	setCategoryRate(rate,i){
-		let temp=this.state.catRates;
-		temp[i]=parseInt(rate);
-		this.setState({catRates:temp});
-	}
+	// setCategoryRate(rate,i){
+	// 	let temp=this.state.catRates;
+	// 	temp[i]=parseInt(rate);
+	// 	this.setState({catRates:temp});
+	// 	this.props.getCategoryRates(this.state.catRates);
+	// }
 
 	componentWillMount(){
-		this.props.dispatch(fetchCategory(this.props.city));
-		console.log(this.state.catRates);
+		this.props.fetchCategory(this.props.city);
+		
 	}
+
 	componentWillUpdate(nextProps, nextState){
 		if(nextProps.city!==this.props.city){
-		this.props.dispatch(fetchCategory(nextProps.city));
+		this.props.fetchCategory(nextProps.city);
 
+		//this.props.getCategoryNames(nextProps.categories);
 	}
-	console.log(this.state.catRates);
+	}
+
+	componentWillReceiveProps(nextProps){
+		const newValue=nextProps.categories;
+		if(newValue !== this.props.categories){
+			this.props.getCategoryNames(newValue);
+		}
 	}
 
 	
 	render(){
 		let categoryItems;
 	if(this.props.categories){
+
 		categoryItems=this.props.categories.map( (category,i) => {
 			return (
-				<Category key={i}  category={category} index={i} setRate={this.setCategoryRate}/>
+				<Category key={i}  category={category} index={i} setRate={this.props.setCategoryRates} />
 				);
 		} );
 			}
@@ -65,4 +72,4 @@ function mapDispatchToProps(dispatch){
 	return bindActionCreators({fetchCategory:fetchCategory},dispatch)
 }
 
-export default connect(mapStateToProps)(categoryList);
+export default connect(mapStateToProps,mapDispatchToProps)(categoryList);

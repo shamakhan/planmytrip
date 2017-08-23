@@ -6,12 +6,12 @@ import {combineReducers} from 'redux';
 // 	plan : plan
 // });
 
-import UserList from './planReducers';
+import plan from './planReducers';
 import testReducer from './testReducer';
 import categories from './categoryReducer';
 
 const allReducers=combineReducers({
-	user:UserList,
+	plan:plan,
 	testUser:testReducer,
 	categories: categories
 });

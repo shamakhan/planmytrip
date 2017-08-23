@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //************************GET REQUESTS****************************************
 
-Route::get('/plan', ['uses' => 'PlanController@createPlan']);
+Route::get('/home/plan', ['uses' => 'PlanController@createPlan']);
 
 Route::get('/updateCategories', ['uses' => 'UtilitiesController@updateAllTopCategories']);
 

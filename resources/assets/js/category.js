@@ -4,7 +4,7 @@ class category extends Component{
 	handleChange(event){
 		const value=event.target.value;
 		document.getElementById(this.props.category).innerHTML=value;
-		this.props.setRate(value,this.props.index);
+		this.props.setRate(value,this.props.category);
 	}
 	render() {
 		return (
