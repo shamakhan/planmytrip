@@ -56524,13 +56524,15 @@ var UserPlan = function (_Component) {
 			mySlider: 0,
 			userName: _('userName').innerHTML.toUpperCase(),
 			city: 'Mumbai',
-			Categories: ['mumbai', 'paris', 'newyork', 'london', 'dubai']
+			Categories: ['mumbai', 'paris', 'newyork', 'london', 'dubai'],
+			journeydays: 2
 
 		};
 
 		_this.handleFromDateChange = _this.handleFromDateChange.bind(_this);
 		_this.handleToDateChange = _this.handleToDateChange.bind(_this);
 		_this.handleStateChange = _this.handleStateChange.bind(_this);
+		_this.journeyDays = _this.journeyDays.bind(_this);
 		// this.toggleCalendar=this.toggleCalendar.bind(this);
 		return _this;
 	}
@@ -56556,6 +56558,7 @@ var UserPlan = function (_Component) {
 				arr.fromDate = date;
 			}
 			this.setState({ setDate: arr });
+			this.journeyDays(arr.fromDate, arr.toDate);
 		}
 	}, {
 		key: 'handleToDateChange',
@@ -56568,6 +56571,7 @@ var UserPlan = function (_Component) {
 				arr.toDate = date;
 			}
 			this.setState({ setDate: arr });
+			this.journeyDays(arr.fromDate, arr.toDate);
 		}
 		// toggleCalendar (e) {
 		//   e && e.preventDefault()
@@ -56575,15 +56579,21 @@ var UserPlan = function (_Component) {
 		// }
 
 	}, {
+		key: 'journeyDays',
+		value: function journeyDays(fromD, toD) {
+			var temp = toD.diff(fromD, 'days') + 1;
+			this.setState({ journeydays: temp });
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			// const props= this.props;
 			// const {store} = this.context;
 			// const state=store.getState();
 
-			return _react2.default.createElement('div', null, _react2.default.createElement('h5', null, 'Hello  ', this.state.userName), _react2.default.createElement('hr', null), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-lg-8' }, _react2.default.createElement('h2', null, 'Make your plan :'), _react2.default.createElement('form', { className: 'form-horizontal' }, _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'city' }, 'City :'), _react2.default.createElement('div', { className: 'col-sm-6' }, _react2.default.createElement('select', { className: 'form-control', name: 'city', onChange: this.handleStateChange }, _react2.default.createElement('option', { value: 'Mumbai' }, 'Mumbai'), _react2.default.createElement('option', { value: 'Paris' }, 'Paris'), _react2.default.createElement('option', { value: 'London' }, 'London'), _react2.default.createElement('option', { value: 'NewYork' }, 'New York'), _react2.default.createElement('option', { value: 'Dubai' }, 'Dubai')))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Please rate the categories to get your plan :'), _react2.default.createElement('div', { className: 'col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement(_categoryList2.default, { city: this.state.city.toLowerCase() })))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Journey Duration :'), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { style: { display: "block" }, className: 'col-sm-5 col-lg-5' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'From :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'fromDate', dateFormat: 'DD/MM/YYYY', selectsStart: true, selected: this.state.setDate.fromDate, startDate: this.state.setDate.fromDate,
-				endDate: this.state.setDate.toDate, onChange: this.handleFromDateChange }))), _react2.default.createElement('div', { className: 'col-sm-5' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'To :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'toDate', dateFormat: 'DD/MM/YYYY', selectsEnd: true, selected: this.state.setDate.toDate, startDate: this.state.setDate.fromDate,
-				endDate: this.state.setDate.toDate, onChange: this.handleToDateChange }))))))))));
+			return _react2.default.createElement('div', null, _react2.default.createElement('h3', null, 'Hello  ', this.state.userName), _react2.default.createElement('hr', null), _react2.default.createElement('h4', null, 'Let\'s make your plan :'), _react2.default.createElement('h6', null, 'Select Appropriate choices'), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-sm-9 col-lg-9 col-md-9' }, _react2.default.createElement('form', { className: 'form-horizontal' }, _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'city' }, 'City :'), _react2.default.createElement('div', { className: 'col-sm-6 col-lg-4 col-md-5' }, _react2.default.createElement('select', { className: 'form-control', name: 'city', onChange: this.handleStateChange }, _react2.default.createElement('option', { value: 'Mumbai' }, 'Mumbai'), _react2.default.createElement('option', { value: 'Paris' }, 'Paris'), _react2.default.createElement('option', { value: 'London' }, 'London'), _react2.default.createElement('option', { value: 'NewYork' }, 'New York'), _react2.default.createElement('option', { value: 'Dubai' }, 'Dubai')))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Rate Categories :'), _react2.default.createElement('div', { className: 'col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement(_categoryList2.default, { city: this.state.city.toLowerCase() })))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Journey Duration :'), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { style: { display: "block" }, className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'From :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'fromDate', dateFormat: 'DD/MM/YYYY', selectsStart: true, selected: this.state.setDate.fromDate, startDate: this.state.setDate.fromDate,
+				endDate: this.state.setDate.toDate, onChange: this.handleFromDateChange }))), _react2.default.createElement('div', { className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'To :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'toDate', dateFormat: 'DD/MM/YYYY', selectsEnd: true, selected: this.state.setDate.toDate, startDate: this.state.setDate.fromDate,
+				endDate: this.state.setDate.toDate, onChange: this.handleToDateChange }))), _react2.default.createElement('div', { className: 'col-sm-2' }, _react2.default.createElement('h3', null, _react2.default.createElement('span', { className: 'label label-primary' }, this.state.journeydays, ' days')))))), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-lg-4 col-sm-4 col-md-4' }), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8 col-md-8 text-center' }, _react2.default.createElement('input', { type: 'submit', className: 'btn btn-primary', value: 'Generate Plan!' }), _react2.default.createElement('br', null)))))));
 		}
 	}]);
 
@@ -56662,11 +56672,12 @@ var category = function (_Component) {
 		value: function handleChange(event) {
 			var value = event.target.value;
 			document.getElementById(this.props.category).innerHTML = value;
+			this.props.setRate(value, this.props.index);
 		}
 	}, {
 		key: "render",
 		value: function render() {
-			return _react2.default.createElement("div", { className: "col-lg-6 col-md-6 col-sm-6", style: { marginBottom: "20px" } }, " ", _react2.default.createElement("h4", null, this.props.category, " : ", _react2.default.createElement("span", { className: "label label-primary", id: this.props.category }, "50"), " "), _react2.default.createElement("div", null, _react2.default.createElement("input", { name: this.props.index, className: "mySlider form-control", style: { margin: "0" }, type: "range", min: "0", max: "100", step: "1", onChange: this.handleChange.bind(this) })));
+			return _react2.default.createElement("div", { className: "col-lg-6 col-md-6 col-sm-10", style: { marginBottom: "20px" } }, " ", _react2.default.createElement("h4", null, this.props.category, " : ", _react2.default.createElement("span", { className: "label label-primary", id: this.props.category }, "50"), " "), _react2.default.createElement("div", null, _react2.default.createElement("input", { name: this.props.index, className: "mySlider form-control", style: { margin: "0" }, type: "range", min: "0", max: "100", step: "1", onChange: this.handleChange.bind(this) })));
 		}
 	}]);
 
@@ -56738,31 +56749,48 @@ function _inherits(subClass, superClass) {
 var categoryList = function (_Component) {
 	_inherits(categoryList, _Component);
 
-	function categoryList() {
+	function categoryList(props) {
 		_classCallCheck(this, categoryList);
 
-		return _possibleConstructorReturn(this, (categoryList.__proto__ || Object.getPrototypeOf(categoryList)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (categoryList.__proto__ || Object.getPrototypeOf(categoryList)).call(this, props));
+
+		_this.state = {
+			catRates: { 1: 50, 2: 50, 3: 50, 4: 50, 5: 50, 6: 50, 7: 50, 8: 50 }
+		};
+		_this.setCategoryRate = _this.setCategoryRate.bind(_this);
+		return _this;
 	}
 
 	_createClass(categoryList, [{
+		key: 'setCategoryRate',
+		value: function setCategoryRate(rate, i) {
+			var temp = this.state.catRates;
+			temp[i] = parseInt(rate);
+			this.setState({ catRates: temp });
+		}
+	}, {
 		key: 'componentWillMount',
 		value: function componentWillMount() {
 			this.props.dispatch((0, _planAction.fetchCategory)(this.props.city));
+			console.log(this.state.catRates);
 		}
 	}, {
 		key: 'componentWillUpdate',
 		value: function componentWillUpdate(nextProps, nextState) {
 			if (nextProps.city !== this.props.city) {
-				this.props.dispatch((0, _planAction.fetchCategory)(this.props.city));
+				this.props.dispatch((0, _planAction.fetchCategory)(nextProps.city));
 			}
+			console.log(this.state.catRates);
 		}
 	}, {
 		key: 'render',
 		value: function render() {
+			var _this2 = this;
+
 			var categoryItems = void 0;
 			if (this.props.categories) {
 				categoryItems = this.props.categories.map(function (category, i) {
-					return _react2.default.createElement(_category2.default, { key: i, category: category, index: i });
+					return _react2.default.createElement(_category2.default, { key: i, category: category, index: i, setRate: _this2.setCategoryRate });
 				});
 			}
 			return _react2.default.createElement('div', null, categoryItems);

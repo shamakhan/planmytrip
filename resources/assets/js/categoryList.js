@@ -7,14 +7,32 @@ import {connect} from 'react-redux';
 
 
 class categoryList extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+			catRates:{1:50,2:50,3:50,4:50,5:50,6:50,7:50,8:50}
+		}
+		this.setCategoryRate=this.setCategoryRate.bind(this);
+	}
+
+	
+
+	setCategoryRate(rate,i){
+		let temp=this.state.catRates;
+		temp[i]=parseInt(rate);
+		this.setState({catRates:temp});
+	}
 
 	componentWillMount(){
 		this.props.dispatch(fetchCategory(this.props.city));
+		console.log(this.state.catRates);
 	}
 	componentWillUpdate(nextProps, nextState){
 		if(nextProps.city!==this.props.city){
-		this.props.dispatch(fetchCategory(this.props.city));
+		this.props.dispatch(fetchCategory(nextProps.city));
+
 	}
+	console.log(this.state.catRates);
 	}
 
 	
@@ -23,7 +41,7 @@ class categoryList extends Component {
 	if(this.props.categories){
 		categoryItems=this.props.categories.map( (category,i) => {
 			return (
-				<Category key={i}  category={category} index={i}/>
+				<Category key={i}  category={category} index={i} setRate={this.setCategoryRate}/>
 				);
 		} );
 			}
