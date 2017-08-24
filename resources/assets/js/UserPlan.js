@@ -8,6 +8,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchPlan} from './PlanPage/actions/planAction';
 
+import Plan from './planList';
+
 
 
 //require('bootstrap-datetime-picker/js/bootstrap-datetimepicker.js');
@@ -19,33 +21,36 @@ class UserPlan extends Component{
 	// }
 
 
-constructor(props){
-	super(props);
-	this.state={
-		setDate:{fromDate:moment(),toDate:moment().add(1,"days")},
-		mySlider:0,
-		userName:((_('userName').innerHTML).toUpperCase()),
-		city:'mumbai',
-		categoryRates:{"Family And Kids":50,"Leisure":50,"Religious Site":50,"Walking Area":50,"Entertainment":50,"Outdoors":50,"Landmark":50,"Historical Site":50},
-		Cities:['mumbai','paris','newyork','london','dubai'],
-		journeyDays:2
-		
-	}
+	constructor(props){
+		super(props);
+		this.state={
+						setDate:{fromDate:moment(),toDate:moment().add(1,"days")},
+						mySlider:0,
+						isGeneratingPlan:true,
+						userName:((_('userName').innerHTML).toUpperCase()),
+						city:'mumbai',
+						categoryRates:{"Family And Kids":50,"Leisure":50,"Religious Site":50,"Walking Area":50,"Entertainment":50,"Outdoors":50,"Landmark":50,"Historical Site":50},
+						Cities:['mumbai','paris','newyork','london','dubai'],
+						journeyDays:2,
+						plan:[]
+					}
 
-	this.handleFromDateChange=this.handleFromDateChange.bind(this);
-		this.handleToDateChange=this.handleToDateChange.bind(this);
-	this.handleStateChange=this.handleStateChange.bind(this);
-	this.journeyDays=this.journeyDays.bind(this);
-	this.setCategoryRates=this.setCategoryRates.bind(this);
+					this.handleFromDateChange=this.handleFromDateChange.bind(this);
+						this.handleToDateChange=this.handleToDateChange.bind(this);
+					this.handleStateChange=this.handleStateChange.bind(this);
+					this.journeyDays=this.journeyDays.bind(this);
+					this.setCategoryRates=this.setCategoryRates.bind(this);
 
-	this.handleSubmit=this.handleSubmit.bind(this);
+					this.handleSubmit=this.handleSubmit.bind(this);
 
-	this.getRankedCategories=this.getRankedCategories.bind(this);
-	this.getCategoryNames=this.getCategoryNames.bind(this);
+					this.getRankedCategories=this.getRankedCategories.bind(this);
+					this.getCategoryNames=this.getCategoryNames.bind(this);
 
-	this.handleDisplay=this.handleDisplay.bind(this);
-	// this.toggleCalendar=this.toggleCalendar.bind(this);
-}
+					this.handleDisplay=this.handleDisplay.bind(this);
+					// this.toggleCalendar=this.toggleCalendar.bind(this);
+
+					this.generatePlanRender=this.generatePlanRender.bind(this);
+		}
 	
 	getCategoryNames(categoryList){
 		let keys=Object.keys(this.state.categoryRates);
@@ -54,18 +59,20 @@ constructor(props){
 		for(let i=0;i<8;i++){
 			temp[categoryList[i]]=arr[keys[i]];
 		}
-		this.setState({categoryRates:temp});
-	}
+		this.setState({categoryRates:temp});}
 
 	handleSubmit(){
 		//event.target.preventDefault();
 		let topCategory=this.getRankedCategories();
 		this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
-		//this.handleDisplay();
+		//this.handleDisplay(this.state.plan);
 	}
 
 	handleDisplay(plan){
-		console.log(plan);
+
+		const {isGeneratingPlan} =this.state;
+		this.setState({isGeneratingPlan:!isGeneratingPlan});
+		this.setState({plan:plan});
 	}
 
 	getRankedCategories(){
@@ -97,69 +104,62 @@ constructor(props){
 		temp[category]=parseInt(rate);
 		this.setState({categoryRates:temp});	}
 	
-
 	handleStateChange(event){
 		const name=event.target.name;
 		const value=event.target.value;
 		if(name==='city'){
 			this.setState({city:value})
-		}
-
-	}
+		}}
 
 	handleFromDateChange (date) {
-
 		let arr=this.state.setDate;
-			if((this.state.setDate.toDate.diff(date,'days'))<0){
-				arr.fromDate=date;
-				arr.toDate=date;
-			}
-			else{
-		arr.fromDate=date;
-	}
-  this.setState({setDate: arr});
-  this.journeyDays(arr.fromDate,arr.toDate);
-}
-handleToDateChange (date) {
-			let temparr=this.state.setDate;
-	if((this.state.setDate.fromDate.diff(date,'days'))>0)
-	{
-		temparr.toDate=date;
-		temparr.fromDate=date;
-	}
-	else{
-		temparr.toDate=date;
-	}
-  this.setState({setDate: temparr});
-  this.journeyDays(temparr.fromDate,temparr.toDate);
-}
-// toggleCalendar (e) {
-//   e && e.preventDefault()
-//   this.setState({isOpen: !this.state.isOpen})
-// }
-journeyDays(fromD,toD){
-	let temp=toD.diff(fromD,'days')+1;
-	this.setState({journeyDays:temp});
-
-}
-
-componentWillReceiveProps(nextProps){
-		const newPlan=nextProps.plan;
-		if(newPlan !== this.props.plan){
-			this.handleDisplay(newPlan);
+		if((this.state.setDate.toDate.diff(date,'days'))<0){
+			arr.fromDate=date;
+			arr.toDate=date;
 		}
-	}
+		else{
+				arr.fromDate=date;
+			}
+			this.setState({setDate: arr});
+			this.journeyDays(arr.fromDate,arr.toDate);	
+			}
 
+	handleToDateChange (date) {
+		let temparr=this.state.setDate;
+		if((this.state.setDate.fromDate.diff(date,'days'))>0)
+		{
+			temparr.toDate=date;
+			temparr.fromDate=date;
+		}
+		else{
+				temparr.toDate=date;
+			}
+  		this.setState({setDate: temparr});
+  		this.journeyDays(temparr.fromDate,temparr.toDate);
+		}
 
-	render() {
+	journeyDays(fromD,toD){
+		let temp=toD.diff(fromD,'days')+1;
+		this.setState({journeyDays:temp});
+		}
 
+	componentWillReceiveProps(nextProps){
+				const newPlan=nextProps.plan;
+				if(newPlan !== this.props.plan){
+					this.setState({plan:newPlan});
+					this.handleDisplay(newPlan);
+
+				}
+				}
+
+	generatePlanRender(){
 		return (
-			<div>
-			<h3>Hello  {this.state.userName}</h3><hr /> 
+				<div>
+				<h3>Hello  {this.state.userName}</h3><hr /> 
 			<h4>Let's make your plan :</h4>
 			<h6>Select Appropriate choices</h6>
 			<div className="row">
-			<div className="col-sm-9 col-lg-9 col-md-9">
+			<div className="col-sm-9 col-lg-12 col-md-9">
 			<form className="form-horizontal">
 			<div className="form-group">
 			<label className="control-label col-sm-4" htmlFor="city">City :</label>
@@ -182,20 +182,18 @@ componentWillReceiveProps(nextProps){
 			</div>
 			</div>
 			</div>
-<div className="form-group">
+			<div className="form-group">
 			<label className="control-label col-sm-4" htmlFor="mySlider">Journey Duration :</label>		
 
 			<div className="col-lg-8 col-sm-8">
 			<div className="row">
 			<div style={{display:"block"}} className="col-sm-4 col-md-4 col-lg-4">
 			<div style={{display:"inline"}}><span>From :</span></div>				
-			<div style={{display:"inline"}}><DatePicker id="fromDate" dateFormat="DD/MM/YYYY" selectsStart selected={this.state.setDate.fromDate}  startDate={this.state.setDate.fromDate}
-    endDate={this.state.setDate.toDate} onChange={this.handleFromDateChange} /></div>
+			<div style={{display:"inline"}}><DatePicker id="fromDate" dateFormat="DD/MM/YYYY" selectsStart selected={this.state.setDate.fromDate}  startDate={this.state.setDate.fromDate} endDate={this.state.setDate.toDate} onChange={this.handleFromDateChange} /></div>
 			</div>
 			<div className="col-sm-4 col-md-4 col-lg-4">
 			<div style={{display:"inline"}}><span>To :</span></div>
-			<div style={{display:"inline"}}><DatePicker id="toDate" dateFormat="DD/MM/YYYY" selectsEnd selected={this.state.setDate.toDate}  startDate={this.state.setDate.fromDate}
-    endDate={this.state.setDate.toDate} onChange={this.handleToDateChange} /></div>
+			<div style={{display:"inline"}}><DatePicker id="toDate" dateFormat="DD/MM/YYYY" selectsEnd selected={this.state.setDate.toDate}  startDate={this.state.setDate.fromDate} endDate={this.state.setDate.toDate} onChange={this.handleToDateChange} /></div>
 
 			</div><div className="col-sm-2"><h3><span className='label label-primary' id="journeyDays">{this.state.journeyDays} days</span></h3></div>
 			</div>
@@ -214,9 +212,20 @@ componentWillReceiveProps(nextProps){
 			</form>
 			</div>
 			</div>
-			</div>
+				</div>
 			);
 
+			}
+
+
+	render() {
+
+		if(this.state.plan===[] || this.state.isGeneratingPlan){
+			return this.generatePlanRender();
+		}
+		else{
+			return (<div className="container"><h3>Your Plan</h3><hr /><Plan places={this.state.plan} /></div>);
+		}
 	}
 
 
