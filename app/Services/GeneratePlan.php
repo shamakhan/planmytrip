@@ -15,7 +15,7 @@ class GeneratePlan
     public function __construct($locations, $totDays){
 
     $this->locations = $locations;
-    $this->totDays = (int)$totDays;
+    $this->totDays = $totDays;
    }
 
    public function getTripPlan(){
@@ -71,7 +71,7 @@ class GeneratePlan
           for($i=0; $i<$locationsToCheck; $i++){
             if($timeOp->inBetween($currentTime, $this->locations[$i]["timePreferred"], timePreferred)){
 
-                        $this->addToDayPlan($this->locations[$i], $currentTime);
+                        $this->addToDayPlan($this->locations[$i], $currentTime, 0, 0);
               $locationPlanIndex++;
               $currentTime += $this->getRequiredTime($i);
 
@@ -88,7 +88,7 @@ class GeneratePlan
 
               if($timeOp->inBetween($currentTime, $this->locations[$i]["timeOpen"], timeOpen)){
 
-                            $this->addToDayPlan($this->locations[$i], $currentTime);
+                            $this->addToDayPlan($this->locations[$i], $currentTime, 0, 0);
                   $locationPlanIndex++;
                   $currentTime += $this->getRequiredTime($i);
 
@@ -138,10 +138,11 @@ class GeneratePlan
           }
 
           $currentTravelTime = $timeOp->getTravelTime($currentLocation, $nextLocationToGo);
+                $currentDistance = $distanceOp->getDistance($currentLocation['name'], $nextLocationToGo['name']);
           $currentTime += $currentTravelTime;
           round($currentTime, 2);
                 //$currentTime += 1; //travelling
-                $this->addToDayPlan($nextLocationToGo, $currentTime);
+                $this->addToDayPlan($nextLocationToGo, $currentTime, $currentTravelTime, $currentDistance);
           $locationPlanIndex++;
           $currentTime += $this->getRequiredTime($nextLocationToGoIndex);
 
@@ -197,9 +198,11 @@ class GeneratePlan
        $this->locationPlan = array_values($this->locationPlan);
    }
 
-   private function addToDayPlan($location, $currentTime){
+   private function addToDayPlan($location, $currentTime, $currentTravelTime, $currentDistance){
 
        $location["timeArrival"] = $currentTime;
+       $location["timeTravel"] = $currentTravelTime;
+       $location["ditanceTravel"] = $currentDistance;
        array_push($this->locationPlan, $location);
    }
 
