@@ -218,6 +218,7 @@ class GeneratePlan
        array_push($this->locationPlan, $this->locationPlan[sizeof($this->locationPlan)-1]);
 
        $this->locationPlan[sizeof($this->locationPlan)-2]["name"] = "lunch";
+              $this->locationPlan[sizeof($this->locationPlan)-2]["id"] = "lunch";
        $this->locationPlan[sizeof($this->locationPlan)-2]["timeArrival"] = $currentTime;
        $this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] = (float)($this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] + 1);
 

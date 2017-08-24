@@ -56709,7 +56709,7 @@ var UserPlan = function (_Component) {
 	}, {
 		key: 'generatePlanRender',
 		value: function generatePlanRender() {
-			return _react2.default.createElement('div', null, _react2.default.createElement('h3', null, 'Hello  ', this.state.userName), _react2.default.createElement('hr', null), _react2.default.createElement('h4', null, 'Let\'s make your plan :'), _react2.default.createElement('h6', null, 'Select Appropriate choices'), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-sm-9 col-lg-12 col-md-9' }, _react2.default.createElement('form', { className: 'form-horizontal' }, _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'city' }, 'City :'), _react2.default.createElement('div', { className: 'col-sm-6 col-lg-4 col-md-5' }, _react2.default.createElement('select', { className: 'form-control', name: 'city', onChange: this.handleStateChange }, _react2.default.createElement('option', { value: 'mumbai' }, 'Mumbai'), _react2.default.createElement('option', { value: 'paris' }, 'Paris'), _react2.default.createElement('option', { value: 'london' }, 'London'), _react2.default.createElement('option', { value: 'newyork' }, 'New York'), _react2.default.createElement('option', { value: 'dubai' }, 'Dubai')))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Rate Categories :'), _react2.default.createElement('div', { className: 'col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement(_categoryList2.default, { setCategoryRates: this.setCategoryRates, getCategoryNames: this.getCategoryNames, city: this.state.city.toLowerCase() })))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Journey Duration :'), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { style: { display: "block" }, className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'From :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'fromDate', dateFormat: 'DD/MM/YYYY', selectsStart: true, selected: this.state.setDate.fromDate, startDate: this.state.setDate.fromDate, endDate: this.state.setDate.toDate, onChange: this.handleFromDateChange }))), _react2.default.createElement('div', { className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'To :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'toDate', dateFormat: 'DD/MM/YYYY', selectsEnd: true, selected: this.state.setDate.toDate, startDate: this.state.setDate.fromDate, endDate: this.state.setDate.toDate, onChange: this.handleToDateChange }))), _react2.default.createElement('div', { className: 'col-sm-2' }, _react2.default.createElement('h3', null, _react2.default.createElement('span', { className: 'label label-primary', id: 'journeyDays' }, this.state.journeyDays, ' days')))))), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-lg-4 col-sm-4 col-md-4' }), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8 col-md-8 text-center' }, _react2.default.createElement('input', { type: 'button', onClick: this.handleSubmit, className: 'btn btn-primary', value: 'Generate Plan!' }), _react2.default.createElement('br', null)))))));
+			return _react2.default.createElement('div', null, _react2.default.createElement('div', { style: { display: "block" } }, _react2.default.createElement('button', { className: 'btn btn-primary', style: { float: "right", display: "inline" } }, 'Explore')), _react2.default.createElement('hr', null), _react2.default.createElement('h4', null, 'Let\'s make your plan :'), _react2.default.createElement('h6', null, 'Select Appropriate choices'), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-sm-9 col-lg-12 col-md-9' }, _react2.default.createElement('form', { className: 'form-horizontal' }, _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'city' }, 'City :'), _react2.default.createElement('div', { className: 'col-sm-6 col-lg-4 col-md-5' }, _react2.default.createElement('select', { className: 'form-control', name: 'city', onChange: this.handleStateChange }, _react2.default.createElement('option', { value: 'mumbai' }, 'Mumbai'), _react2.default.createElement('option', { value: 'paris' }, 'Paris'), _react2.default.createElement('option', { value: 'london' }, 'London'), _react2.default.createElement('option', { value: 'newyork' }, 'New York'), _react2.default.createElement('option', { value: 'dubai' }, 'Dubai')))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Rate Categories :'), _react2.default.createElement('div', { className: 'col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement(_categoryList2.default, { setCategoryRates: this.setCategoryRates, getCategoryNames: this.getCategoryNames, city: this.state.city.toLowerCase() })))), _react2.default.createElement('div', { className: 'form-group' }, _react2.default.createElement('label', { className: 'control-label col-sm-4', htmlFor: 'mySlider' }, 'Journey Duration :'), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8' }, _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { style: { display: "block" }, className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'From :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'fromDate', dateFormat: 'DD/MM/YYYY', selectsStart: true, selected: this.state.setDate.fromDate, startDate: this.state.setDate.fromDate, endDate: this.state.setDate.toDate, onChange: this.handleFromDateChange }))), _react2.default.createElement('div', { className: 'col-sm-4 col-md-4 col-lg-4' }, _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement('span', null, 'To :')), _react2.default.createElement('div', { style: { display: "inline" } }, _react2.default.createElement(_reactDatepicker2.default, { id: 'toDate', dateFormat: 'DD/MM/YYYY', selectsEnd: true, selected: this.state.setDate.toDate, startDate: this.state.setDate.fromDate, endDate: this.state.setDate.toDate, onChange: this.handleToDateChange }))), _react2.default.createElement('div', { className: 'col-sm-2' }, _react2.default.createElement('h3', null, _react2.default.createElement('span', { className: 'label label-info', id: 'journeyDays' }, this.state.journeyDays, ' days')))))), _react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-lg-4 col-sm-4 col-md-4' }), _react2.default.createElement('div', { className: 'col-lg-8 col-sm-8 col-md-8 text-center' }, _react2.default.createElement('input', { type: 'button', onClick: this.handleSubmit, className: 'btn btn-primary', value: 'Generate Plan!' }), _react2.default.createElement('br', null)))))));
 		}
 	}, {
 		key: 'render',
@@ -56813,7 +56813,7 @@ var category = function (_Component) {
 	}, {
 		key: "render",
 		value: function render() {
-			return _react2.default.createElement("div", { className: "col-lg-4 col-md-6 col-sm-10", style: { marginBottom: "20px" } }, " ", _react2.default.createElement("h4", null, this.props.category, " : ", _react2.default.createElement("span", { className: "label label-primary", id: this.props.category }, "50"), " "), _react2.default.createElement("div", null, _react2.default.createElement("input", { name: this.props.index, className: "mySlider form-control", style: { margin: "0" }, type: "range", min: "0", max: "100", step: "1", onChange: this.handleChange.bind(this) })));
+			return _react2.default.createElement("div", { className: "col-lg-4 col-md-6 col-sm-10", style: { marginBottom: "20px" } }, " ", _react2.default.createElement("h4", null, this.props.category, " : ", _react2.default.createElement("span", { className: "label label-info", id: this.props.category }, "50"), " "), _react2.default.createElement("div", null, _react2.default.createElement("input", { name: this.props.index, className: "mySlider form-control", style: { margin: "0" }, type: "range", min: "0", max: "100", step: "1", onChange: this.handleChange.bind(this) })));
 		}
 	}]);
 
@@ -57051,16 +57051,38 @@ function _inherits(subClass, superClass) {
 var PlanItem = function (_Component) {
 	_inherits(PlanItem, _Component);
 
-	function PlanItem() {
+	function PlanItem(props) {
 		_classCallCheck(this, PlanItem);
 
-		return _possibleConstructorReturn(this, (PlanItem.__proto__ || Object.getPrototypeOf(PlanItem)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (PlanItem.__proto__ || Object.getPrototypeOf(PlanItem)).call(this, props));
+
+		_this.distanceTravel = _this.distanceTravel.bind(_this);
+		_this.isLunch = _this.isLunch.bind(_this);
+		_this.handleRemove = _this.handleRemove.bind(_this);
+
+		return _this;
 	}
 
 	_createClass(PlanItem, [{
+		key: "handleRemove",
+		value: function handleRemove(event) {
+			//console.log("click");
+			this.props.removePlace(this.props.index, this.props.day);
+		}
+	}, {
+		key: "distanceTravel",
+		value: function distanceTravel() {
+			if (this.props.place.ditanceTravel > 0) return true;else return false;
+		}
+	}, {
+		key: "isLunch",
+		value: function isLunch() {
+			if (this.props.place.name === "lunch") return true;else return false;
+		}
+	}, {
 		key: "render",
 		value: function render() {
-			return _react2.default.createElement("div", { className: "row planPlaces polaroid" }, _react2.default.createElement("a", { href: "#", className: "x" }, "X"), _react2.default.createElement("div", { className: "col-lg-4" }, _react2.default.createElement("div", null, _react2.default.createElement("img", { className: "planImages", src: this.props.place.image }))), _react2.default.createElement("div", { className: "col-lg-8" }, _react2.default.createElement("h2", null, this.props.place.name), _react2.default.createElement("h6", null, "Time Open : ", this.props.place.timeOpen), _react2.default.createElement("h6", null, "Categories : ", this.props.place.categories), _react2.default.createElement("h6", null, "Address : ", this.props.place.address)));
+			return _react2.default.createElement("div", null, this.distanceTravel() && !this.isLunch() && _react2.default.createElement("div", { style: { display: "block" } }, _react2.default.createElement("div", { className: "vertical-row" }, _react2.default.createElement("h5", null, this.props.place.ditanceTravel, "km"))), !this.isLunch() && _react2.default.createElement("div", { className: "row planPlaces polaroid" }, _react2.default.createElement("button", { onClick: this.handleRemove }), _react2.default.createElement("div", { className: "col-lg-4 col-md-4 col-sm-5" }, _react2.default.createElement("div", null, _react2.default.createElement("img", { className: "planImages", src: this.props.place.image }))), _react2.default.createElement("div", { className: "col-lg-8 col-md-8 col-sm-7" }, _react2.default.createElement("h2", null, this.props.place.name), _react2.default.createElement("h6", null, "Time Open : ", this.props.place.timeOpen), _react2.default.createElement("h6", null, "Categories : ", this.props.place.categories), _react2.default.createElement("h6", null, "Address : ", this.props.place.address), _react2.default.createElement("h6", null, _react2.default.createElement("a", { href: "#" }, "More info...")))), this.isLunch() && _react2.default.createElement("div", null, _react2.default.createElement("i", null, _react2.default.createElement("h3", null, "Lunch Time"))));
 		}
 	}]);
 
@@ -57126,22 +57148,73 @@ function _inherits(subClass, superClass) {
 var Plan = function (_Component) {
 	_inherits(Plan, _Component);
 
-	function Plan() {
+	function Plan(props) {
 		_classCallCheck(this, Plan);
 
-		return _possibleConstructorReturn(this, (Plan.__proto__ || Object.getPrototypeOf(Plan)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Plan.__proto__ || Object.getPrototypeOf(Plan)).call(this, props));
+
+		_this.state = {
+			day: 0,
+			places: _this.props.places
+		};
+
+		_this.dayDisplay = _this.dayDisplay.bind(_this);
+		_this.pagination = _this.pagination.bind(_this);
+		_this.handleClick = _this.handleClick.bind(_this);
+		_this.removePlace = _this.removePlace.bind(_this);
+		return _this;
 	}
 
 	_createClass(Plan, [{
-		key: 'render',
-		value: function render() {
+		key: 'removePlace',
+		value: function removePlace(index, i) {
+			//console.log(index+" "+i);
+			var arr = this.state.places;
+			arr[i].splice(index, 1);
+			this.setState({ places: arr });
+		}
+	}, {
+		key: 'dayDisplay',
+		value: function dayDisplay() {
+			var _this2 = this;
+
 			var places = [];
-			if (this.props.places) {
-				places = this.props.places[0].map(function (place, i) {
-					return _react2.default.createElement(_plan2.default, { key: i, place: place });
+			if (this.state.places) {
+				places = this.state.places[this.state.day].map(function (place, i) {
+					return _react2.default.createElement(_plan2.default, { key: place.id, index: place.i, day: _this2.state.day, removePlace: _this2.removePlace, place: place });
 				});
 			}
+			console.log(this.state.places);
 			return _react2.default.createElement('div', null, places, ' ');
+		}
+	}, {
+		key: 'handleClick',
+		value: function handleClick(event) {
+			var page = parseInt(event.target.innerHTML) - 1;
+			this.setState({ day: page });
+		}
+	}, {
+		key: 'pagination',
+		value: function pagination() {
+			var page = [];
+			if (this.state.places && this.state.places.length > 1) {
+				var l = this.state.places.length;
+				for (var i = 0; i < l; i++) {
+					page.push(_react2.default.createElement('li', { key: i }, _react2.default.createElement('a', { href: '#', onClick: this.handleClick }, i + 1)));
+				}
+			}
+			return _react2.default.createElement('ul', { className: 'pagination' }, page);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			// let places=[];
+			// if(this.props.places){
+			// 	places=this.props.places[0].map((place,i) =>{
+			// 		return (<PlanItem key={i} place={place} />);
+			// 	});
+			// }
+			return _react2.default.createElement('div', null, this.pagination(), this.dayDisplay(), ' ');
 		}
 	}]);
 

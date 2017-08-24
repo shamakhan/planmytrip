@@ -58,7 +58,7 @@ class UserPlan extends Component{
 		let temp={};
 		for(let i=0;i<8;i++){
 			temp[categoryList[i]]=arr[keys[i]];
-		}
+		} 
 		this.setState({categoryRates:temp});}
 
 	handleSubmit(){
@@ -155,7 +155,9 @@ class UserPlan extends Component{
 	generatePlanRender(){
 		return (
 				<div>
-				<h3>Hello  {this.state.userName}</h3><hr /> 
+				<div style={{display:"block"}}><button className="btn btn-primary" style={{float:"right",display:"inline"}}>Explore</button></div>
+
+				<hr /> 
 			<h4>Let's make your plan :</h4>
 			<h6>Select Appropriate choices</h6>
 			<div className="row">
@@ -195,7 +197,7 @@ class UserPlan extends Component{
 			<div style={{display:"inline"}}><span>To :</span></div>
 			<div style={{display:"inline"}}><DatePicker id="toDate" dateFormat="DD/MM/YYYY" selectsEnd selected={this.state.setDate.toDate}  startDate={this.state.setDate.fromDate} endDate={this.state.setDate.toDate} onChange={this.handleToDateChange} /></div>
 
-			</div><div className="col-sm-2"><h3><span className='label label-primary' id="journeyDays">{this.state.journeyDays} days</span></h3></div>
+			</div><div className="col-sm-2"><h3><span className='label label-info' id="journeyDays">{this.state.journeyDays} days</span></h3></div>
 			</div>
 			</div>
 

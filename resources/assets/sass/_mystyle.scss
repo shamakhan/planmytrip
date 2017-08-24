@@ -275,24 +275,47 @@ background-color:#fafafa;
   padding:5px;
   height:200px;
   margin-bottom:10px;
-  overflow:visible;
   position:relative;
 }
 
-.planPlaces > a{
-  position: absolute;
-    top: 1%;
-    right: 1%;
-    color:black;
+.planPlaces > button{
+  float:right;
+    margin-top:5px;
+    margin-right:5px;
     cursor:pointer;
+    color: #fff;
+    height: 2px;
+    border: 1px solid #AEAEAE;
+    border-radius: 10px;
+    background: #605F61;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 5px 2px; 
+}
+.planPlaces > button:before {
+    content: "×";
 }
 
-.planPlaces > a:focus{
+.planPlace a:hover{
   cursor:pointer;
+  cursor:hand;
 }
 
 
 .planImages{
   width:100%;
   height:180px;
+}
+
+.vertical-row {
+ height:30px;
+ width:10px;
+ background-color: #c9c9c9;
+} 
+
+.vertical-row h5{
+  margin-left:12px;
+  color:#a1a1a1;
 }
