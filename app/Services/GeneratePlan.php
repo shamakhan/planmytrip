@@ -199,9 +199,10 @@ class GeneratePlan
    }
 
    private function addToDayPlan($location, $currentTime, $currentTravelTime, $currentDistance){
+       $timeOp = new TimeOperations();
 
        $location["timeArrival"] = $currentTime;
-       $location["timeTravel"] = $currentTravelTime;
+       $location["timeTravel"] = $timeOp->getTimeInString((float)$currentTravelTime);
        $location["ditanceTravel"] = $currentDistance;
        array_push($this->locationPlan, $location);
    }
@@ -218,7 +219,6 @@ class GeneratePlan
        array_push($this->locationPlan, $this->locationPlan[sizeof($this->locationPlan)-1]);
 
        $this->locationPlan[sizeof($this->locationPlan)-2]["name"] = "lunch";
-              $this->locationPlan[sizeof($this->locationPlan)-2]["id"] = "lunch";
        $this->locationPlan[sizeof($this->locationPlan)-2]["timeArrival"] = $currentTime;
        $this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] = (float)($this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] + 1);
 

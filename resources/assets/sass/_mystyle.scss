@@ -271,9 +271,9 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 
 .planPlaces{
 background-color:#fafafa;
-  width:60%;
+  width:auto;
   padding:5px;
-  height:200px;
+  height:auto;
   margin-bottom:10px;
   position:relative;
 }
@@ -305,7 +305,7 @@ background-color:#fafafa;
 
 
 .planImages{
-  width:100%;
+  width:auto;
   height:180px;
 }
 

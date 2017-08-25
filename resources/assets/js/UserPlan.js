@@ -12,6 +12,7 @@ import Plan from './planList';
 
 
 
+
 //require('bootstrap-datetime-picker/js/bootstrap-datetimepicker.js');
 
 class UserPlan extends Component{
@@ -156,7 +157,7 @@ class UserPlan extends Component{
 		return (
 				<div>
 				<div style={{display:"block"}}><button className="btn btn-primary" style={{float:"right",display:"inline"}}>Explore</button></div>
-
+<br/>
 				<hr /> 
 			<h4>Let's make your plan :</h4>
 			<h6>Select Appropriate choices</h6>
@@ -202,13 +203,10 @@ class UserPlan extends Component{
 			</div>
 
 			</div>
-			<div className="row">
-				<div className="col-lg-4 col-sm-4 col-md-4"></div>
-				<div className="col-lg-8 col-sm-8 col-md-8 text-center">
+			<div className="text-center">
 				<input type="button" onClick={this.handleSubmit} className="btn btn-primary" value="Generate Plan!"/>
 				<br />
 				</div>
-			</div> 
 
 			
 			</form>

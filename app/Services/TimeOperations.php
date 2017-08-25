@@ -76,6 +76,16 @@ class TimeOperations
 
     }
 
+    public function getTimeInString($time){
+
+        $hours = floor($time);
+        $minutes = (int)(($time - floor($time)) * 60);
+        if ($hours == 0){
+            return $minutes." minutes";
+        }
+        return $hours." hrs ".$minutes." minutes";
+    }
+
     public function getTravelTime($currentLocation, $nextLocationToGo)
     {
         //use time()

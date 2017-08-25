@@ -35,12 +35,10 @@ export default class PlanItem extends Component{
 				{!this.isLunch() && <div className="row planPlaces polaroid">
 					<button onClick={this.handleRemove}></button>
 						<div className="col-lg-4 col-md-4 col-sm-5">
-							<div>
 							<img className="planImages" src={this.props.place.image} />
-							</div>
 						</div>
 						<div className="col-lg-8 col-md-8 col-sm-7">
-								<h2>{this.props.place.name}</h2>
+								<h3>{this.props.place.name}</h3>
 								<h6>Time Open : {this.props.place.timeOpen}</h6>
 								<h6>Categories : {this.props.place.categories}</h6>
 								<h6>Address : {this.props.place.address}</h6>
