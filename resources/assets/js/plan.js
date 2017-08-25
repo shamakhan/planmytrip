@@ -1,13 +1,84 @@
 import React,{Component} from 'react';
+import { DragSource, DropTarget } from 'react-dnd';
+import PropTypes from 'prop-types';
 
+import { findDOMNode } from 'react-dom';
+
+
+const placeSource = {
+  beginDrag(props) {
+    return {
+    	place:props.place,
+      id: props.id,
+      index: props.index,
+    };
+  },
+};
+
+const placeTarget = {
+  hover(props, monitor, component) {
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
+
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+    const clientOffset = monitor.getClientOffset();
+
+    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+    // Dragging downwards
+    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      return; }
+
+    // Dragging upwards
+    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      return;    }
+
+    // Time to actually perform the action
+    props.movePlace(dragIndex, hoverIndex,monitor.getItem().place);
+    monitor.getItem().index = hoverIndex;
+  },
+};
+
+@DropTarget("placeItem", placeTarget, connect => ({
+  connectDropTarget: connect.dropTarget(),
+}))
+@DragSource("placeItem", placeSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+}))
 export default class PlanItem extends Component{
+
 	constructor(props){
 		super(props);
 		this.distanceTravel=this.distanceTravel.bind(this);
 		this.isLunch=this.isLunch.bind(this);
 		this.handleRemove=this.handleRemove.bind(this);
 
+		this.renderOverlay=this.renderOverlay.bind(this);
+
 	}
+
+	renderOverlay(color) {
+    return (
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: '100%',
+        width: '100%',
+        zIndex: 1,
+        opacity: 0.5,
+        backgroundColor: color,
+      }} />
+    );
+  }
 
 	handleRemove(event){
 		//console.log("click");
@@ -29,7 +100,9 @@ export default class PlanItem extends Component{
 	}
 
 	render(){
-		return (<div>
+		    const {isDragging, connectDragSource, connectDropTarget } = this.props;
+		    const opacity = isDragging ? 0.5 : 1;
+		return connectDragSource(connectDropTarget( <div>
 
 				{this.distanceTravel() && !this.isLunch() && <div style={{display:"block"}} ><div className="vertical-row"><h5>{this.props.place.ditanceTravel}km</h5></div></div>}
 				{!this.isLunch() && <div className="row planPlaces polaroid">
@@ -47,9 +120,15 @@ export default class PlanItem extends Component{
 					</div>}
 					{this.isLunch() && <div><i><h3>Lunch Time</h3></i></div>}
 					</div>
-			);
+			));
 
 
 	}
 
 }
+
+PlanItem.propTypes = {
+    index: PropTypes.number.isRequired,
+    id: PropTypes.any.isRequired,
+    movePlace: PropTypes.func.isRequired,
+  };
