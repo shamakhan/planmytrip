@@ -30,40 +30,42 @@ class PlanList extends Component{
 
 		this.movePlace=this.movePlace.bind(this);
 
+		this.getPrevPlace=this.getPrevPlace.bind(this);
+
 	}
 
 	movePlace(dragIndex, hoverIndex,place) {
-		if(this.state.currentPlace.includes(place)){
-    const { currentPlace } = this.state;
-    const dragPlace = currentPlace[dragIndex];
+					if(this.state.currentPlace.includes(place)){
+			    const { currentPlace } = this.state;
+			    const dragPlace = currentPlace[dragIndex];
 
-    this.setState(update(this.state, {
-      currentPlace: {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragPlace
-          ],
-        ],
-      },
-    }));
+			    this.setState(update(this.state, {
+			      currentPlace: {
+			        $splice: [
+			          [dragIndex, 1],
+			          [hoverIndex, 0, dragPlace
+			          ],
+			        ],
+			      },
+			    }));	
 
-    let places=this.state.places;
-    places[this.state.day]=this.state.currentPlace;
-    this.setState({places:places});
-}
-else{
-	let arr=this.state.currentPlace;
-	arr.splice(hoverIndex,0,place);
-	this.setState({currentPlace:arr});
-    let places=this.state.places;
-    places[this.state.day]=this.state.currentPlace;
-    this.setState({places:places});
-    let temp=this.state.removed;
-    temp.splice(temp.indexOf(place),1);
-    this.setState({removed:temp});
-    //console.log(this.state.removed);
-}
-  }
+			    let places=this.state.places;
+			    places[this.state.day]=this.state.currentPlace;
+			    this.setState({places:places});
+			}
+			else{
+				let arr=this.state.currentPlace;
+				arr.splice(hoverIndex,0,place);
+				this.setState({currentPlace:arr});
+			    let places=this.state.places;
+			    places[this.state.day]=this.state.currentPlace;
+			    this.setState({places:places});
+			    let temp=this.state.removed;
+			    temp.splice(temp.indexOf(place),1);
+			    this.setState({removed:temp});
+			    //console.log(this.state.removed);
+			}
+  	}
 
 	removePlace(index,i){
 		//console.log(index+" "+i);
@@ -87,10 +89,26 @@ else{
 		let places=[];
 		if(this.state.places){
 			places=this.state.currentPlace.map((place,i) =>{
-				return (<PlanItem key={i} index={i} id={place.id} day={this.state.day} removePlace={this.removePlace} movePlace={this.movePlace} place={place} />);
+				return (<PlanItem key={i} previous={this.getPrevPlace(i-1)} index={i} id={place.id} day={this.state.day} removePlace={this.removePlace} movePlace={this.movePlace} place={place} />);
 			});
 		}
 		return ( <div>{places} </div>);
+	}
+
+	getPrevPlace(i){
+		if(i<0){
+			return null;
+		}
+		else{
+			if(this.state.currentPlace[i].name==="lunch"){
+				if(this.state.currentPlace[i-1]){
+					return this.state.currentPlace[i-1].name;
+				}
+				else
+					return null;
+			}
+			return this.state.currentPlace[i].name;
+		}
 	}
 
 	handlePageClick(event){

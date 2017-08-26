@@ -19,6 +19,7 @@ class category extends Component{
 
 	onStarClick(nextValue, prevValue, name) {
         this.setState({rating: nextValue});
+        this.props.setRate(nextValue,this.props.category);
     }
 
 	render() {

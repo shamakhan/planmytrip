@@ -29,5 +29,6 @@ Route::get('/updateCategories', ['uses' => 'UtilitiesController@updateAllTopCate
 
 Route::get('/home/getCategories', ['uses' => 'PlanController@getCategories']);
 
+Route::get('/home/getLocDistance',['uses' => 'PlanController@getLocDistance']);
 
 //************************POST REQUESTS**************************************

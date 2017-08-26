@@ -8984,7 +8984,7 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 
 .planPlaces {
   background-color: #fafafa;
-  width: auto;
+  display: block;
   padding: 5px;
   height: auto;
   margin-bottom: 10px;
@@ -9018,7 +9018,7 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 }
 
 .planImages {
-  width: auto;
+  width: 200px;
   height: 180px;
 }
 
@@ -9028,7 +9028,13 @@ input[type=range].mySlider:focus::-ms-fill-upper {
   background-color: #c9c9c9;
 }
 
-.vertical-row h5 {
+.vertical-row-parent {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.vertical-row-parent h5 {
   margin-left: 12px;
   color: #a1a1a1;
 }

@@ -3,6 +3,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 
 import { findDOMNode } from 'react-dom';
+import axios from 'axios';
 
 
 const placeSource = {
@@ -57,13 +58,38 @@ export default class PlanItem extends Component{
 
 	constructor(props){
 		super(props);
-		this.distanceTravel=this.distanceTravel.bind(this);
+
+    this.state={
+      distance:{}
+    }
+
+		this.isDistanceTravel=this.isDistanceTravel.bind(this);
 		this.isLunch=this.isLunch.bind(this);
 		this.handleRemove=this.handleRemove.bind(this);
 
 		this.renderOverlay=this.renderOverlay.bind(this);
 
 	}
+
+  componentDidMount() {
+    let loc1=this.props.place.name;
+    let loc2=this.props.previous;
+    axios.get("/home/getLocDistance?location1="+loc1+"&location2="+loc2)
+      .then(res => {
+        const distance = res.data;
+        this.setState({ distance });
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let loc1=nextProps.place.name;
+    let loc2=nextProps.previous;
+    axios.get("/home/getLocDistance?location1="+loc1+"&location2="+loc2)
+      .then(res => {
+        const distance = res.data;
+        this.setState({ distance });
+      });
+  }
 
 	renderOverlay(color) {
     return (
@@ -81,15 +107,14 @@ export default class PlanItem extends Component{
   }
 
 	handleRemove(event){
-		//console.log("click");
 		this.props.removePlace(this.props.index,this.props.day);
 	}
 
-	distanceTravel(){
-		if(this.props.place.ditanceTravel>0)
-			return true;
-		else
+	isDistanceTravel(){
+		if(this.props.previous===null)
 			return false;
+		else
+			return true;
 	}
 
 	isLunch(){
@@ -104,13 +129,14 @@ export default class PlanItem extends Component{
 		    const opacity = isDragging ? 0.5 : 1;
 		return connectDragSource(connectDropTarget( <div>
 
-				{this.distanceTravel() && !this.isLunch() && <div style={{display:"block"}} ><div className="vertical-row"><h5>{this.props.place.ditanceTravel}km</h5></div></div>}
+				{this.isDistanceTravel() && !this.isLunch() && <div className="vertical-row-parent" ><div className="vertical-row"></div><h5>Distance : {this.state.distance.distance} km</h5>&nbsp;&nbsp;<h5>Estimated Travel Time : {this.state.distance.duration}</h5></div>}
 				{!this.isLunch() && <div className="row planPlaces polaroid">
 					<button onClick={this.handleRemove}></button>
 						<div className="col-lg-4 col-md-4 col-sm-5">
 							<img className="planImages" src={this.props.place.image} />
 						</div>
-						<div className="col-lg-8 col-md-8 col-sm-7">
+            <div className="col-lg-1 col-md-1"></div>
+						<div className="col-lg-7 col-md-7 col-sm-7">
 								<h3>{this.props.place.name}</h3>
 								<h6>Time Open : {this.props.place.timeOpen}</h6>
 								<h6>Categories : {this.props.place.categories}</h6>
@@ -118,7 +144,7 @@ export default class PlanItem extends Component{
 								<h6><a href="#" >More info...</a></h6>
 						</div>
 					</div>}
-					{this.isLunch() && <div><i><h3>Lunch Time</h3></i></div>}
+					{this.isLunch() && <div style={{color:"#c0c0c0",marginLeft:"20px"}}><i><h3>Lunch Time</h3></i></div>}
 					</div>
 			));
 

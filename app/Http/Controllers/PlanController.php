@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\utilities\CategoriesOpertations;
 use App\Services\GenerateQuery;
 use App\Services\RedisOperations;
+use App\Services\TimeOperations;
 use App\Tasks\PopulateRedis;
 use Codeception\Module\Redis;
 use Illuminate\Http\Request;
 use App\location;
 use App\Services\GeneratePlan;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
 
 class PlanController extends Controller
 {
     public function createPlan(){
 
         $city =  Input::get('city');
-        $topCategories = json_decode(Input::get('topCategories'));
+        $topCategories = Input::get('topCategories');
         $days = Input::get('days');
-
-        //return $topCategories;
         //$topCategories = $topCategories->toArray();
         /*$topCategories = array();
         $topCategories[0] = "Outdoors";
@@ -34,7 +34,6 @@ class PlanController extends Controller
         if (empty($topCategories)){
             $locations = $generateQuery->getAllLocations($city)
             ->get();
-            $locations = $locations->toArray();
         }else{
             $locations = $generateQuery->orLikeQuery($city, $topCategories)
                 ->get();
@@ -47,7 +46,8 @@ class PlanController extends Controller
 
             $locations = array_merge($locations, $locationsAppend);
         }
-        $generatePlan = new GeneratePlan($locations,$days);
+
+        $generatePlan = new GeneratePlan($locations, $days);
         $generatePlan->createTripPlan();
 
         return $generatePlan->getTripPlan();
@@ -87,9 +87,24 @@ class PlanController extends Controller
     public function getThumbnails(){
         $city =  Input::get('city');
         $locations = new location();
+        $locations->setTable($city);
         $thumbnails = $locations->select('id', 'name', 'image', 'description')
-            ->limit(4)
+
             ->get();
         return $thumbnails->toArray();
+    }
+
+    public function getLocDistance(){
+        $location1 = Input::get('location1');
+        $location2 = Input::get('location2');
+
+        $redisOp = new RedisOperations();
+        $timeOp = new TimeOperations();
+        $redis["distance"] = $redisOp->getDistanceRedis($location1, $location2);
+        $redis["duration"] = $timeOp
+            ->getTimeInString($redisOp
+                ->getDurationRedis($location1, $location2));
+
+        return $redis;
     }
 }

@@ -64004,7 +64004,7 @@ var UserPlan = function (_Component) {
 			isGeneratingPlan: true,
 			userName: _('userName').innerHTML.toUpperCase(),
 			city: 'mumbai',
-			categoryRates: { "Family And Kids": 50, "Leisure": 50, "Religious Site": 50, "Walking Area": 50, "Entertainment": 50, "Outdoors": 50, "Landmark": 50, "Historical Site": 50 },
+			categoryRates: { "Family And Kids": 1, "Leisure": 1, "Religious Site": 1, "Walking Area": 1, "Entertainment": 1, "Outdoors": 1, "Landmark": 1, "Historical Site": 1 },
 			Cities: ['mumbai', 'paris', 'newyork', 'london', 'dubai'],
 			journeyDays: 2,
 			plan: []
@@ -64061,7 +64061,7 @@ var UserPlan = function (_Component) {
 			var sortable = [];
 			var arr = this.state.categoryRates;
 			for (var cat in arr) {
-				if (arr[cat] >= 60) {
+				if (arr[cat] >= 6) {
 					sortable.push([cat, arr[cat]]);
 				}
 			}
@@ -64252,6 +64252,7 @@ var category = function (_Component) {
 		key: 'onStarClick',
 		value: function onStarClick(nextValue, prevValue, name) {
 			this.setState({ rating: nextValue });
+			this.props.setRate(nextValue, this.props.category);
 		}
 	}, {
 		key: 'render',
@@ -64487,6 +64488,10 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDom = __webpack_require__("./node_modules/react-dom/index.js");
 
+var _axios = __webpack_require__("./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -64569,7 +64574,11 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
 
     var _this = _possibleConstructorReturn(this, (PlanItem.__proto__ || Object.getPrototypeOf(PlanItem)).call(this, props));
 
-    _this.distanceTravel = _this.distanceTravel.bind(_this);
+    _this.state = {
+      distance: {}
+    };
+
+    _this.isDistanceTravel = _this.isDistanceTravel.bind(_this);
     _this.isLunch = _this.isLunch.bind(_this);
     _this.handleRemove = _this.handleRemove.bind(_this);
 
@@ -64579,6 +64588,30 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
   }
 
   _createClass(PlanItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var loc1 = this.props.place.name;
+      var loc2 = this.props.previous;
+      _axios2.default.get("/home/getLocDistance?location1=" + loc1 + "&location2=" + loc2).then(function (res) {
+        var distance = res.data;
+        _this2.setState({ distance: distance });
+      });
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
+      var loc1 = nextProps.place.name;
+      var loc2 = nextProps.previous;
+      _axios2.default.get("/home/getLocDistance?location1=" + loc1 + "&location2=" + loc2).then(function (res) {
+        var distance = res.data;
+        _this3.setState({ distance: distance });
+      });
+    }
+  }, {
     key: 'renderOverlay',
     value: function renderOverlay(color) {
       return _react2.default.createElement('div', { style: {
@@ -64595,13 +64628,12 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
   }, {
     key: 'handleRemove',
     value: function handleRemove(event) {
-      //console.log("click");
       this.props.removePlace(this.props.index, this.props.day);
     }
   }, {
-    key: 'distanceTravel',
-    value: function distanceTravel() {
-      if (this.props.place.ditanceTravel > 0) return true;else return false;
+    key: 'isDistanceTravel',
+    value: function isDistanceTravel() {
+      if (this.props.previous === null) return false;else return true;
     }
   }, {
     key: 'isLunch',
@@ -64617,7 +64649,7 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
           connectDropTarget = _props.connectDropTarget;
 
       var opacity = isDragging ? 0.5 : 1;
-      return connectDragSource(connectDropTarget(_react2.default.createElement('div', null, this.distanceTravel() && !this.isLunch() && _react2.default.createElement('div', { style: { display: "block" } }, _react2.default.createElement('div', { className: 'vertical-row' }, _react2.default.createElement('h5', null, this.props.place.ditanceTravel, 'km'))), !this.isLunch() && _react2.default.createElement('div', { className: 'row planPlaces polaroid' }, _react2.default.createElement('button', { onClick: this.handleRemove }), _react2.default.createElement('div', { className: 'col-lg-4 col-md-4 col-sm-5' }, _react2.default.createElement('img', { className: 'planImages', src: this.props.place.image })), _react2.default.createElement('div', { className: 'col-lg-8 col-md-8 col-sm-7' }, _react2.default.createElement('h3', null, this.props.place.name), _react2.default.createElement('h6', null, 'Time Open : ', this.props.place.timeOpen), _react2.default.createElement('h6', null, 'Categories : ', this.props.place.categories), _react2.default.createElement('h6', null, 'Address : ', this.props.place.address), _react2.default.createElement('h6', null, _react2.default.createElement('a', { href: '#' }, 'More info...')))), this.isLunch() && _react2.default.createElement('div', null, _react2.default.createElement('i', null, _react2.default.createElement('h3', null, 'Lunch Time'))))));
+      return connectDragSource(connectDropTarget(_react2.default.createElement('div', null, this.isDistanceTravel() && !this.isLunch() && _react2.default.createElement('div', { className: 'vertical-row-parent' }, _react2.default.createElement('div', { className: 'vertical-row' }), _react2.default.createElement('h5', null, 'Distance : ', this.state.distance.distance, ' km'), '\xA0\xA0', _react2.default.createElement('h5', null, 'Estimated Travel Time : ', this.state.distance.duration)), !this.isLunch() && _react2.default.createElement('div', { className: 'row planPlaces polaroid' }, _react2.default.createElement('button', { onClick: this.handleRemove }), _react2.default.createElement('div', { className: 'col-lg-4 col-md-4 col-sm-5' }, _react2.default.createElement('img', { className: 'planImages', src: this.props.place.image })), _react2.default.createElement('div', { className: 'col-lg-1 col-md-1' }), _react2.default.createElement('div', { className: 'col-lg-7 col-md-7 col-sm-7' }, _react2.default.createElement('h3', null, this.props.place.name), _react2.default.createElement('h6', null, 'Time Open : ', this.props.place.timeOpen), _react2.default.createElement('h6', null, 'Categories : ', this.props.place.categories), _react2.default.createElement('h6', null, 'Address : ', this.props.place.address), _react2.default.createElement('h6', null, _react2.default.createElement('a', { href: '#' }, 'More info...')))), this.isLunch() && _react2.default.createElement('div', { style: { color: "#c0c0c0", marginLeft: "20px" } }, _react2.default.createElement('i', null, _react2.default.createElement('h3', null, 'Lunch Time'))))));
     }
   }]);
 
@@ -64726,6 +64758,8 @@ var PlanList = function (_Component) {
 
 		_this.movePlace = _this.movePlace.bind(_this);
 
+		_this.getPrevPlace = _this.getPrevPlace.bind(_this);
+
 		return _this;
 	}
 
@@ -64787,10 +64821,24 @@ var PlanList = function (_Component) {
 			var places = [];
 			if (this.state.places) {
 				places = this.state.currentPlace.map(function (place, i) {
-					return _react2.default.createElement(_plan2.default, { key: i, index: i, id: place.id, day: _this2.state.day, removePlace: _this2.removePlace, movePlace: _this2.movePlace, place: place });
+					return _react2.default.createElement(_plan2.default, { key: i, previous: _this2.getPrevPlace(i - 1), index: i, id: place.id, day: _this2.state.day, removePlace: _this2.removePlace, movePlace: _this2.movePlace, place: place });
 				});
 			}
 			return _react2.default.createElement('div', null, places, ' ');
+		}
+	}, {
+		key: 'getPrevPlace',
+		value: function getPrevPlace(i) {
+			if (i < 0) {
+				return null;
+			} else {
+				if (this.state.currentPlace[i].name === "lunch") {
+					if (this.state.currentPlace[i - 1]) {
+						return this.state.currentPlace[i - 1].name;
+					} else return null;
+				}
+				return this.state.currentPlace[i].name;
+			}
 		}
 	}, {
 		key: 'handlePageClick',

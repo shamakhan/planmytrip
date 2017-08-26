@@ -30,7 +30,7 @@ class UserPlan extends Component{
 						isGeneratingPlan:true,
 						userName:((_('userName').innerHTML).toUpperCase()),
 						city:'mumbai',
-						categoryRates:{"Family And Kids":50,"Leisure":50,"Religious Site":50,"Walking Area":50,"Entertainment":50,"Outdoors":50,"Landmark":50,"Historical Site":50},
+						categoryRates:{"Family And Kids":1,"Leisure":1,"Religious Site":1,"Walking Area":1,"Entertainment":1,"Outdoors":1,"Landmark":1,"Historical Site":1},
 						Cities:['mumbai','paris','newyork','london','dubai'],
 						journeyDays:2,
 						plan:[]
@@ -80,7 +80,7 @@ class UserPlan extends Component{
 		let sortable=[];
 		let arr=this.state.categoryRates;
 		for(let cat in arr){
-			if(arr[cat]>=60){
+			if(arr[cat]>=6){
 				sortable.push([cat,arr[cat]]);
 			}
 		}
