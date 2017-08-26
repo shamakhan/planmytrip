@@ -12,6 +12,7 @@
         <link rel="shortcut icon" href="/images/logo.png" />
 
     <!-- Styles -->
+    
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
