@@ -64575,7 +64575,8 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
     var _this = _possibleConstructorReturn(this, (PlanItem.__proto__ || Object.getPrototypeOf(PlanItem)).call(this, props));
 
     _this.state = {
-      distance: {}
+      distance: {},
+      timeArrival: _this.props.timeArrival
     };
 
     _this.isDistanceTravel = _this.isDistanceTravel.bind(_this);
@@ -64583,6 +64584,8 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
     _this.handleRemove = _this.handleRemove.bind(_this);
 
     _this.renderOverlay = _this.renderOverlay.bind(_this);
+
+    _this.convertTime24to12 = _this.convertTime24to12.bind(_this);
 
     return _this;
   }
@@ -64610,6 +64613,9 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
         var distance = res.data;
         _this3.setState({ distance: distance });
       });
+      if (nextProps.timeArrival !== this.props.timeArrival) {
+        this.setState({ timeArrival: nextProps.timeArrival });
+      }
     }
   }, {
     key: 'renderOverlay',
@@ -64636,6 +64642,26 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
       if (this.props.previous === null) return false;else return true;
     }
   }, {
+    key: 'convertTime24to12',
+    value: function convertTime24to12(time24) {
+      var tmpArr = time24.split(':'),
+          time12 = void 0;
+      if (parseInt(tmpArr[0]) == 12) {
+        time12 = tmpArr[0] + ':' + tmpArr[1] + 'pm';
+      } else {
+        if (parseInt(tmpArr[0]) == 0) {
+          time12 = '12:' + tmpArr[1] + 'am';
+        } else {
+          if (parseInt(tmpArr[0]) > 12) {
+            time12 = parseInt(tmpArr[0]) - 12 + ':' + tmpArr[1] + 'pm';
+          } else {
+            time12 = tmpArr[0] + ':' + tmpArr[1] + 'am';
+          }
+        }
+      }
+      return time12;
+    }
+  }, {
     key: 'isLunch',
     value: function isLunch() {
       if (this.props.place.name === "lunch") return true;else return false;
@@ -64649,7 +64675,7 @@ var PlanItem = (_dec = (0, _reactDnd.DropTarget)("placeItem", placeTarget, funct
           connectDropTarget = _props.connectDropTarget;
 
       var opacity = isDragging ? 0.5 : 1;
-      return connectDragSource(connectDropTarget(_react2.default.createElement('div', null, this.isDistanceTravel() && !this.isLunch() && _react2.default.createElement('div', { className: 'vertical-row-parent' }, _react2.default.createElement('div', { className: 'vertical-row' }), _react2.default.createElement('h5', null, 'Distance : ', this.state.distance.distance, ' km'), '\xA0\xA0', _react2.default.createElement('h5', null, 'Estimated Travel Time : ', this.state.distance.duration)), !this.isLunch() && _react2.default.createElement('div', { className: 'row planPlaces polaroid' }, _react2.default.createElement('button', { onClick: this.handleRemove }), _react2.default.createElement('div', { className: 'col-lg-4 col-md-4 col-sm-5' }, _react2.default.createElement('img', { className: 'planImages', src: this.props.place.image })), _react2.default.createElement('div', { className: 'col-lg-1 col-md-1' }), _react2.default.createElement('div', { className: 'col-lg-7 col-md-7 col-sm-7' }, _react2.default.createElement('h3', null, this.props.place.name), _react2.default.createElement('h6', null, 'Time Open : ', this.props.place.timeOpen), _react2.default.createElement('h6', null, 'Categories : ', this.props.place.categories), _react2.default.createElement('h6', null, 'Address : ', this.props.place.address), _react2.default.createElement('h6', null, _react2.default.createElement('a', { href: '#' }, 'More info...')))), this.isLunch() && _react2.default.createElement('div', { style: { color: "#c0c0c0", marginLeft: "20px" } }, _react2.default.createElement('i', null, _react2.default.createElement('h3', null, 'Lunch Time'))))));
+      return connectDragSource(connectDropTarget(_react2.default.createElement('div', { className: 'row' }, _react2.default.createElement('div', { className: 'col-lg-2 col-md-1' }), _react2.default.createElement('div', { className: 'col-lg-10 col-md-11' }, this.isDistanceTravel() && !this.isLunch() && _react2.default.createElement('div', { className: 'vertical-row-parent' }, _react2.default.createElement('div', { className: 'vertical-row' }), _react2.default.createElement('h5', null, 'Distance : ', this.state.distance.distance, ' km'), '\xA0\xA0', _react2.default.createElement('h5', null, 'Estimated Travel Time : ', this.state.distance.duration))), _react2.default.createElement('div', { className: 'col-lg-1', style: { color: "#a9a9a9", position: "relative" } }, _react2.default.createElement('h6', null, _react2.default.createElement('i', null, this.convertTime24to12(this.state.timeArrival)))), _react2.default.createElement('div', { className: 'col-lg-11' }, !this.isLunch() && _react2.default.createElement('div', { className: 'row planPlaces polaroid' }, _react2.default.createElement('button', { onClick: this.handleRemove }), _react2.default.createElement('div', { className: 'col-lg-4 col-md-4 col-sm-5' }, _react2.default.createElement('img', { className: 'planImages', src: this.props.place.image })), _react2.default.createElement('div', { className: 'col-lg-1 col-md-1' }), _react2.default.createElement('div', { className: 'col-lg-7 col-md-7 col-sm-7' }, _react2.default.createElement('h3', null, this.props.place.name), _react2.default.createElement('h6', null, 'Time Open : ', this.props.place.timeOpen), _react2.default.createElement('h6', null, 'Categories : ', this.props.place.categories), _react2.default.createElement('h6', null, 'Address : ', this.props.place.address), _react2.default.createElement('h6', null, _react2.default.createElement('a', { href: '#' }, 'More info...'))))), _react2.default.createElement('div', { className: 'col-lg-3 col-md-2 col-sm-1' }), _react2.default.createElement('div', { className: 'col-lg-9 col-md-10 col-sm-11' }, this.isLunch() && _react2.default.createElement('div', { style: { color: "#c0c0c0", marginLeft: "20px" } }, _react2.default.createElement('i', null, _react2.default.createElement('h3', null, 'Lunch Time')))))));
     }
   }]);
 
@@ -64709,6 +64735,10 @@ var _reactDndHtml5Backend = __webpack_require__("./node_modules/react-dnd-html5-
 
 var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 
+var _axios = __webpack_require__("./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) {
 	return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -64760,6 +64790,9 @@ var PlanList = function (_Component) {
 
 		_this.getPrevPlace = _this.getPrevPlace.bind(_this);
 
+		_this.setArrivalTimes = _this.setArrivalTimes.bind(_this);
+		_this.getCorrectTimeAdd = _this.getCorrectTimeAdd.bind(_this);
+
 		return _this;
 	}
 
@@ -64784,6 +64817,7 @@ var PlanList = function (_Component) {
 				var arr = this.state.currentPlace;
 				arr.splice(hoverIndex, 0, place);
 				this.setState({ currentPlace: arr });
+				this.setArrivalTimes(arr);
 				var _places = this.state.places;
 				_places[this.state.day] = this.state.currentPlace;
 				this.setState({ places: _places });
@@ -64801,6 +64835,7 @@ var PlanList = function (_Component) {
 			var removed = this.state.removed;
 			removed.push(arr[i].splice(index, 1)[0]);
 			this.setState({ places: arr });
+			this.setArrivalTimes(arr[this.state.day]);
 			this.setState({ removed: removed });
 		}
 	}, {
@@ -64809,9 +64844,67 @@ var PlanList = function (_Component) {
 			var arr = this.state.currentPlace;
 			arr.unshift(place);
 			this.setState({ currentPlace: arr });
+			this.setArrivalTimes(arr);
 			var temp = this.state.removed;
 			temp.splice(temp.indexOf(place), 1);
 			this.setState({ removed: temp });
+		}
+	}, {
+		key: 'getCorrectTimeAdd',
+		value: function getCorrectTimeAdd(timeArrival, timeRequired, traveltime) {
+			var hour = parseInt(timeArrival.substring(0, 2));
+			var min = parseInt(timeArrival.substring(3, 5));
+			hour += parseInt(timeRequired.substring(0, 2));
+			min += parseInt(timeRequired.substring(3, 5));
+			min += traveltime;
+			if (min > 59) {
+				hour += parseInt(min / 60);
+				min = min % 60;
+			}
+			if (hour > 24) {
+				hour = hour % 24;
+			}
+			function padZeroes(num) {
+				if (num.toString().length < 2) {
+					return "0" + num;
+				}
+				return num;
+			}
+			return "" + padZeroes(hour) + ":" + padZeroes(min);
+		}
+	}, {
+		key: 'setArrivalTimes',
+		value: function setArrivalTimes(place) {
+			var arr = place;
+			var temp = place[0];
+			temp.timeArrival = temp.timeOpen.substring(0, 5);
+			if (parseInt(temp.timeArrival.substring(0, 2)) < 9) {
+				temp.timeArrival = "09:00";
+			}
+			arr.splice(0, 1, temp);
+			var prevPlaceTime = void 0;
+			for (var i = 1; i < arr.length; i++) {
+				if (temp.name === "lunch") {
+					temp.timeRequired = "00:30";
+				}
+				prevPlaceTime = this.getCorrectTimeAdd(temp.timeArrival, temp.timeRequired, 30);
+				temp = arr[i];
+				temp.timeArrival = prevPlaceTime;
+				arr.splice(i, 1, temp);
+			}
+			this.setState({ currentPlace: arr });
+		}
+	}, {
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			this.setArrivalTimes(this.state.currentPlace);
+		}
+	}, {
+		key: 'componentWillUpdate',
+		value: function componentWillUpdate(nextProps, nextState) {
+			if (nextState.currentPlace !== this.state.currentPlace) {
+				this.setArrivalTimes(nextState.currentPlace);
+			}
 		}
 	}, {
 		key: 'dayDisplay',
@@ -64821,7 +64914,7 @@ var PlanList = function (_Component) {
 			var places = [];
 			if (this.state.places) {
 				places = this.state.currentPlace.map(function (place, i) {
-					return _react2.default.createElement(_plan2.default, { key: i, previous: _this2.getPrevPlace(i - 1), index: i, id: place.id, day: _this2.state.day, removePlace: _this2.removePlace, movePlace: _this2.movePlace, place: place });
+					return _react2.default.createElement(_plan2.default, { key: i, timeArrival: place.timeArrival, previous: _this2.getPrevPlace(i - 1), index: i, id: place.id, day: _this2.state.day, removePlace: _this2.removePlace, movePlace: _this2.movePlace, place: place });
 				});
 			}
 			return _react2.default.createElement('div', null, places, ' ');

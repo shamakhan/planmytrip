@@ -8984,9 +8984,9 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 
 .planPlaces {
   background-color: #fafafa;
-  display: block;
   padding: 5px;
   height: auto;
+  margin-left: 6px;
   margin-bottom: 10px;
   position: relative;
 }
@@ -9018,8 +9018,8 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 }
 
 .planImages {
-  width: 200px;
-  height: 180px;
+  width: 160px;
+  height: 140px;
 }
 
 .vertical-row {
@@ -9037,54 +9037,5 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 .vertical-row-parent h5 {
   margin-left: 12px;
   color: #a1a1a1;
-}
-
-fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-.rating {
-  border: none;
-  float: left;
-}
-
-.rating > input {
-  display: none;
-}
-
-.rating > label:before {
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\F005";
-}
-
-.rating > .half:before {
-  content: "\F089";
-  position: absolute;
-}
-
-.rating > label {
-  color: #ddd;
-  float: right;
-}
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label,
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-  color: #FFD700;
-}
-
-/* hover previous stars in list */
-
-.rating > input:checked + label:hover,
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label,
-.rating > input:checked ~ label:hover ~ label {
-  color: #FFED85;
 }
 

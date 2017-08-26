@@ -6,6 +6,7 @@ import RemovedPlace from './removedPlace';
 import update from 'react/lib/update';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import axios from 'axios';
 
 
 class PlanList extends Component{
@@ -32,6 +33,9 @@ class PlanList extends Component{
 
 		this.getPrevPlace=this.getPrevPlace.bind(this);
 
+		this.setArrivalTimes=this.setArrivalTimes.bind(this);
+		this.getCorrectTimeAdd=this.getCorrectTimeAdd.bind(this);
+
 	}
 
 	movePlace(dragIndex, hoverIndex,place) {
@@ -57,6 +61,7 @@ class PlanList extends Component{
 				let arr=this.state.currentPlace;
 				arr.splice(hoverIndex,0,place);
 				this.setState({currentPlace:arr});
+				this.setArrivalTimes(arr);
 			    let places=this.state.places;
 			    places[this.state.day]=this.state.currentPlace;
 			    this.setState({places:places});
@@ -73,6 +78,7 @@ class PlanList extends Component{
 		let removed=this.state.removed;
 		removed.push((arr[i].splice(index,1))[0]);
 		this.setState({places:arr});
+		this.setArrivalTimes(arr[this.state.day]);
 		this.setState({removed:removed});
 	}
 
@@ -80,16 +86,73 @@ class PlanList extends Component{
 		let arr=this.state.currentPlace;
 		arr.unshift(place);
 		this.setState({currentPlace:arr});
+		this.setArrivalTimes(arr);
 		let temp=this.state.removed;
 	    temp.splice(temp.indexOf(place),1);
 		this.setState({removed:temp});
+	}
+
+	getCorrectTimeAdd(timeArrival,timeRequired,traveltime){
+		let hour=parseInt(timeArrival.substring(0,2));
+		let min=parseInt(timeArrival.substring(3,5));
+		hour+=parseInt(timeRequired.substring(0,2));
+		min+=parseInt(timeRequired.substring(3,5));	
+		min+=traveltime;
+		if(min>59){
+			hour+=parseInt(min/60);
+			min=min%60;
+		}
+		if(hour>24)
+		{
+			hour=hour%24;
+		}
+		function padZeroes(num){
+			if(num.toString().length<2){
+				return "0"+num;
+			}
+			return num;
+		}
+		return ""+padZeroes(hour)+":"+padZeroes(min);
+	}
+
+	setArrivalTimes(place){
+		let arr=place;
+		let temp=place[0];
+		temp.timeArrival=temp.timeOpen.substring(0,5);
+		if(parseInt(temp.timeArrival.substring(0,2))<9)
+		{
+			temp.timeArrival="09:00";
+		}
+		arr.splice(0,1,temp);
+		let prevPlaceTime;
+		for(let i=1;i<arr.length;i++){
+			if(temp.name==="lunch"){
+				temp.timeRequired="00:30";
+			}
+			prevPlaceTime=this.getCorrectTimeAdd(temp.timeArrival,temp.timeRequired,30);
+			temp=arr[i];
+			temp.timeArrival=prevPlaceTime;
+			arr.splice(i,1,temp);
+		}
+		this.setState({currentPlace:arr});
+	}
+
+	componentWillMount(){
+		this.setArrivalTimes(this.state.currentPlace);
+	}
+
+	componentWillUpdate(nextProps,nextState){
+		if(nextState.currentPlace!==this.state.currentPlace){
+			this.setArrivalTimes(nextState.currentPlace);
+		}
+		
 	}
 
 	dayDisplay(){
 		let places=[];
 		if(this.state.places){
 			places=this.state.currentPlace.map((place,i) =>{
-				return (<PlanItem key={i} previous={this.getPrevPlace(i-1)} index={i} id={place.id} day={this.state.day} removePlace={this.removePlace} movePlace={this.movePlace} place={place} />);
+				return (<PlanItem key={i} timeArrival={place.timeArrival} previous={this.getPrevPlace(i-1)} index={i} id={place.id} day={this.state.day} removePlace={this.removePlace} movePlace={this.movePlace} place={place} />);
 			});
 		}
 		return ( <div>{places} </div>);
