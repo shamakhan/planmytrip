@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import CategoryList from './categoryList';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
+
+import DayPicker, { DateUtils } from 'react-day-picker';
+
 import moment from 'moment';
 
 import {connect} from 'react-redux';
@@ -25,16 +28,17 @@ class UserPlan extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-						setDate:{fromDate:moment(),toDate:moment().add(1,"days")},
 						mySlider:0,
 						isGeneratingPlan:true,
 						userName:((_('userName').innerHTML).toUpperCase()),
 						city:'mumbai',
 						categoryRates:{"Family And Kids":1,"Leisure":1,"Religious Site":1,"Walking Area":1,"Entertainment":1,"Outdoors":1,"Landmark":1,"Historical Site":1},
 						Cities:['mumbai','paris','newyork','london','dubai'],
-						journeyDays:2,
-						plan:[]
-					}
+						journeyDays:null,
+						plan:[],
+						from:null,
+						to:null,
+					};
 
 					this.handleFromDateChange=this.handleFromDateChange.bind(this);
 						this.handleToDateChange=this.handleToDateChange.bind(this);
@@ -51,7 +55,34 @@ class UserPlan extends Component{
 					// this.toggleCalendar=this.toggleCalendar.bind(this);
 
 					this.generatePlanRender=this.generatePlanRender.bind(this);
+
+					this.handleDayClick=this.handleDayClick.bind(this);
+					this.handleResetClick=this.handleResetClick.bind(this);
+
+					this.goBack=this.goBack.bind(this);
+
 		}
+
+		goBack(){
+			this.setState({isGeneratingPlan:true});
+		}
+
+	handleDayClick(day) {
+	    const range = DateUtils.addDayToRange(day, this.state);
+	    this.setState(range);
+	    if(range.to){
+	    	let days=moment(range.to).diff(range.from,"days")+1;
+	    	this.setState({journeyDays:days});
+	    }
+	  };
+
+	handleResetClick(e){
+	    e.preventDefault();
+	    this.setState({
+	      from: null,
+	      to: null,
+	    });
+	  };
 	
 	getCategoryNames(categoryList){
 		let keys=Object.keys(this.state.categoryRates);
@@ -64,9 +95,14 @@ class UserPlan extends Component{
 
 	handleSubmit(){
 		//event.target.preventDefault();
-		let topCategory=this.getRankedCategories();
-		this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
+		if(this.state.from && this.state.to && this.state.journeyDays){
+			let topCategory=this.getRankedCategories();
+			this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
 		//this.handleDisplay(this.state.plan);
+		}
+		else{
+			_("displayDayError").innerHTML="<h5 class='alert alert-warning'>Please select appropriate range.</h5>";
+		}
 	}
 
 	handleDisplay(plan){
@@ -154,6 +190,8 @@ class UserPlan extends Component{
 				}
 
 	generatePlanRender(){
+
+		const { from, to } = this.state;
 		return (
 				<div>
 				<div style={{display:"block"}}><button className="btn btn-primary" style={{float:"right",display:"inline"}}>Explore</button></div>
@@ -189,17 +227,30 @@ class UserPlan extends Component{
 			<label className="control-label col-sm-4" htmlFor="mySlider">Journey Duration :</label>		
 
 			<div className="col-lg-8 col-sm-8">
-			<div className="row">
-			<div style={{display:"block"}} className="col-sm-4 col-md-4 col-lg-4">
-			<div style={{display:"inline"}}><span>From :</span></div>				
-			<div style={{display:"inline"}}><DatePicker id="fromDate" dateFormat="DD/MM/YYYY" selectsStart selected={this.state.setDate.fromDate}  startDate={this.state.setDate.fromDate} endDate={this.state.setDate.toDate} onChange={this.handleFromDateChange} /></div>
-			</div>
-			<div className="col-sm-4 col-md-4 col-lg-4">
-			<div style={{display:"inline"}}><span>To :</span></div>
-			<div style={{display:"inline"}}><DatePicker id="toDate" dateFormat="DD/MM/YYYY" selectsEnd selected={this.state.setDate.toDate}  startDate={this.state.setDate.fromDate} endDate={this.state.setDate.toDate} onChange={this.handleToDateChange} /></div>
-
-			</div><div className="col-sm-2"><h3><span className='label label-info' id="journeyDays">{this.state.journeyDays} days</span></h3></div>
-			</div>
+						<div className="RangeExample">
+			        {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
+			        {from && !to && <p>Please select the <strong>last day</strong>.</p>}
+			        {from &&
+			          to &&
+			          <p>
+			            You chose from
+			            {' '}
+			            {moment(from).format('L')}
+			            {' '}
+			            to
+			            {' '}
+			            {moment(to).format('L')}
+			            .
+			            {' '}<a href="." onClick={this.handleResetClick}>Reset</a>
+			          </p>}
+			        <DayPicker
+			          numberOfMonths={2}
+			          selectedDays={[from, { from, to }]}
+			          onDayClick={this.handleDayClick}
+			          fixedWeeks
+			        />
+			      </div>
+			      <div  id="displayDayError"></div>
 			</div>
 
 			</div>
@@ -224,7 +275,11 @@ class UserPlan extends Component{
 			return this.generatePlanRender();
 		}
 		else{
-			return (<div className="container"><h3>Your Plan</h3><hr /><Plan places={this.state.plan} /></div>);
+			return (<div><div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+				<div  style={{height:"35px"}}><h3 >Your Plan</h3></div>
+				<div><button className="btn btn-primary" style={{height:"35px"}} onClick={this.goBack}>Go Back</button>&nbsp;
+				<button className="btn btn-primary" style={{height:"35px"}}>Explore</button></div></div><hr />
+				<Plan places={this.state.plan} /></div>);
 		}
 	}
 

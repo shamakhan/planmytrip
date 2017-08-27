@@ -155,19 +155,19 @@ export default class PlanItem extends Component{
       <div className="col-lg-2 col-md-1"></div><div className="col-lg-10 col-md-11">
 				{this.isDistanceTravel() && !this.isLunch() && <div className="vertical-row-parent" ><div className="vertical-row"></div><h5>Distance : {this.state.distance.distance} km</h5>&nbsp;&nbsp;<h5>Estimated Travel Time : {this.state.distance.duration}</h5></div>}
       </div>
-      <div className="col-lg-1" style={{color:"#a9a9a9", position:"relative"}}><h6><i>{this.convertTime24to12(this.state.timeArrival)}</i></h6></div>
+      <div className="col-lg-1" style={{color:"#808080"}}><h6><i>{this.convertTime24to12(this.state.timeArrival)}</i></h6></div>
         <div className="col-lg-11">
         {!this.isLunch() && <div className="row planPlaces polaroid">
 					<button onClick={this.handleRemove}></button>
-						<div className="col-lg-4 col-md-4 col-sm-5">
-							<img className="planImages" src={this.props.place.image} />
+						<div className="col-lg-4 col-md-4 col-sm-5" style={{position:"static"}}>
+							<img className="planImages" src={this.props.place.image}/>
 						</div>
             <div className="col-lg-1 col-md-1"></div>
 						<div className="col-lg-7 col-md-7 col-sm-7">
 								<h3>{this.props.place.name}</h3>
-								<h6>Time Open : {this.props.place.timeOpen}</h6>
-								<h6>Categories : {this.props.place.categories}</h6>
-								<h6>Address : {this.props.place.address}</h6>
+								{this.props.place.timeOpen && <h6><b>Time Open :</b> {this.props.place.timeOpen}</h6>}
+								<h6><b>Categories :</b> {this.props.place.categories}</h6>
+								<h6><b>Address :</b> {this.props.place.address}</h6>
 								<h6><a href="#" >More info...</a></h6>
 						</div>
 					</div>}

@@ -274,14 +274,14 @@ background-color:#fafafa;
   padding:5px;
   height:auto;
   margin-left:6px;
+  margin-right:15px;
   margin-bottom:10px;
-  position:relative;
 }
 
 .planPlaces > button{
   float:right;
     margin-top:5px;
-    margin-right:5px;
+    margin-right:8px;
     cursor:pointer;
     color: #fff;
     height: 2px;
@@ -293,6 +293,8 @@ background-color:#fafafa;
     display: inline-block;
     line-height: 0px;
     padding: 5px 2px; 
+    white-space:nowrap;
+    overflow:inherit;
 }
 .planPlaces > button:before {
     content: "×";
@@ -305,8 +307,8 @@ background-color:#fafafa;
 
 
 .planImages{
-  width:160px;
-  height:140px;
+  width:180px;
+  height:160px;
 }
 
 .vertical-row {
@@ -321,5 +323,5 @@ background-color:#fafafa;
 
 .vertical-row-parent h5{
   margin-left:12px;
-  color:#a1a1a1;
+  color:#808080;
 }

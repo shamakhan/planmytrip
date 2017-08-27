@@ -119,7 +119,7 @@ class PlanList extends Component{
 		let arr=place;
 		let temp=place[0];
 		temp.timeArrival=temp.timeOpen.substring(0,5);
-		if(parseInt(temp.timeArrival.substring(0,2))<9)
+		if(!temp.timeArrival || parseInt(temp.timeArrival.substring(0,2))<9 )
 		{
 			temp.timeArrival="09:00";
 		}
@@ -225,7 +225,7 @@ class PlanList extends Component{
 		// 		return (<PlanItem key={i} place={place} />);
 		// 	});
 		// }
-		return (<div className="row"><div className="col-lg-7 col-md-8 col-sm-10">{this.pagination()}
+		return (<div className="row"><div className="col-lg-7 col-md-8 col-sm-10" >{this.pagination()}
 
 			{this.dayDisplay()} </div>
 			<div className="col-lg-4 col-md-4 col-sm-7">
