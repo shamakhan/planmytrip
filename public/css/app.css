@@ -1,4 +1,4 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);/* DayPicker styles */
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);/* DayPicker styles */
 
 .DayPicker {
   display: inline-block;
@@ -868,8 +868,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.eot?f4769f9bdb7466be65088239c12046d1);
-  src: url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.eot?f4769f9bdb7466be65088239c12046d1?#iefix) format("embedded-opentype"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff2?448c34a56d699c29117adc64c43affeb) format("woff2"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff?fa2772327f55d8198301fdb8bcfc8158) format("woff"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.ttf?e18bbf611f2a2e43afc071aa2f4e1512) format("truetype"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.svg?89889688147bd7575d6327160d64e760#glyphicons_halflingsregular) format("svg");
+  src: url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.eot?12a426958c2fd0d78683b99233309f8a);
+  src: url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.eot?12a426958c2fd0d78683b99233309f8a?#iefix) format("embedded-opentype"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff2?f4f8e06484f66843af437aa747d95f07) format("woff2"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff?4c8bc1afc2a24829681619de967f8a43) format("woff"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.ttf?a8680ee4a60bc03270cb85165fbd2878) format("truetype"), url(/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.svg?a0180954d7d374e153899d0974b25225#glyphicons_halflingsregular) format("svg");
 }
 
 .glyphicon {
@@ -9013,9 +9013,15 @@ div.polaroid-text {
 }
 
 div.polaroid {
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom: 25px;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 12px;
+}
+
+img.polaroid {
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 12px;
 }
 
 .infoRight {
@@ -9028,7 +9034,7 @@ div.polaroid {
 .down-image {
   margin: 0;
   background-image: url("/images/travel2.jpeg");
-  min-height: 500px;
+  min-height: 450px;
   width: 100%;
   opacity: 1;
   background-position: center;
@@ -9177,15 +9183,17 @@ input[type=range].mySlider:focus::-ms-fill-upper {
   background-color: #fafafa;
   padding: 5px;
   height: auto;
+  width: 100%;
   margin-left: 6px;
   margin-right: 15px;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .planPlaces > button {
   float: right;
-  margin-top: 5px;
-  margin-right: 8px;
+  margin-top: -2px;
+  margin-right: -2px;
   cursor: pointer;
   color: #fff;
   height: 2px;
@@ -9211,8 +9219,8 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 }
 
 .planImages {
-  width: 180px;
-  height: 160px;
+  width: 100px;
+  height: 90px;
 }
 
 .vertical-row {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import CategoryList from './categoryList';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 
 import DayPicker, { DateUtils } from 'react-day-picker';
 
@@ -32,23 +31,19 @@ class UserPlan extends Component{
 						isGeneratingPlan:true,
 						userName:((_('userName').innerHTML).toUpperCase()),
 						city:'mumbai',
-						categoryRates:{"Family And Kids":1,"Leisure":1,"Religious Site":1,"Walking Area":1,"Entertainment":1,"Outdoors":1,"Landmark":1,"Historical Site":1},
 						Cities:['mumbai','paris','newyork','london','dubai'],
 						journeyDays:null,
+						selectedCategories:[],
+						categories:["Family And Kids","Leisure","Religious Site","Walking Area","Entertainment","Outdoors","Landmark","Historical Site"],
 						plan:[],
 						from:null,
 						to:null,
 					};
 
-					this.handleFromDateChange=this.handleFromDateChange.bind(this);
-						this.handleToDateChange=this.handleToDateChange.bind(this);
-					this.handleStateChange=this.handleStateChange.bind(this);
-					this.journeyDays=this.journeyDays.bind(this);
-					this.setCategoryRates=this.setCategoryRates.bind(this);
+					this.handleCityChange=this.handleCityChange.bind(this);
 
 					this.handleSubmit=this.handleSubmit.bind(this);
 
-					this.getRankedCategories=this.getRankedCategories.bind(this);
 					this.getCategoryNames=this.getCategoryNames.bind(this);
 
 					this.handleDisplay=this.handleDisplay.bind(this);
@@ -61,10 +56,24 @@ class UserPlan extends Component{
 
 					this.goBack=this.goBack.bind(this);
 
+					this.addRemoveCategories=this.addRemoveCategories.bind(this);
+
+		}
+
+		addRemoveCategories(category,operation){
+			let temp=this.state.selectedCategories;
+			if(operation==="add"){
+				temp.push(category);
+			}
+			if(operation==="remove"){
+				temp.splice(temp.indexOf(category),1);
+			}
+			this.setState({selectedCategories:temp});
 		}
 
 		goBack(){
 			this.setState({isGeneratingPlan:true});
+			this.setState({city:'mumbai'});
 		}
 
 	handleDayClick(day) {
@@ -85,19 +94,19 @@ class UserPlan extends Component{
 	  };
 	
 	getCategoryNames(categoryList){
-		let keys=Object.keys(this.state.categoryRates);
-		let arr=this.state.categoryRates;
-		let temp={};
-		for(let i=0;i<8;i++){
-			temp[categoryList[i]]=arr[keys[i]];
+		let temp=[];
+		let l=categoryList.length;
+		for(let i=0;i<l;i++){
+			temp[i]=categoryList[i];
 		} 
-		this.setState({categoryRates:temp});}
+		this.setState({categories:temp});}
 
 	handleSubmit(){
 		//event.target.preventDefault();
 		if(this.state.from && this.state.to && this.state.journeyDays){
-			let topCategory=this.getRankedCategories();
-			this.props.fetchPlan(this.state.city,topCategory,this.state.journeyDays);
+			//let topCategory=this.getRankedCategories();
+			//console.log(this.state.categories);
+			this.props.fetchPlan(this.state.city,this.state.selectedCategories,this.state.journeyDays);
 		//this.handleDisplay(this.state.plan);
 		}
 		else{
@@ -109,76 +118,73 @@ class UserPlan extends Component{
 
 		const {isGeneratingPlan} =this.state;
 		this.setState({isGeneratingPlan:!isGeneratingPlan});
+		let arr=plan[plan.length-1];
+		this.setState({remaining:arr});
+		plan.splice(plan.length-1,1);
 		this.setState({plan:plan});
 	}
 
-	getRankedCategories(){
-		let sortable=[];
-		let arr=this.state.categoryRates;
-		for(let cat in arr){
-			if(arr[cat]>=6){
-				sortable.push([cat,arr[cat]]);
-			}
-		}
-		sortable.sort(function(a,b){
-			return b[1]-a[1];
-		});
-
-		for(let i=0;i<sortable.length;i++){
-			sortable[i]=sortable[i][0];
-		}
-		return sortable;
+	// getRankedCategories(){
+	// 	let sortable=[];
+	// 	let arr=this.state.categoryRates;
+	// 	for(let cat in arr){
+	// 		if(arr[cat]>=6){
+	// 			sortable.push([cat,arr[cat]]);
+	// 		}
+	// 	}
+	// 	sortable.sort(function(a,b){
+	// 		return b[1]-a[1];
+	// 	});
 
 
-		// this.state.categoryRates.sort(function(a,b){return a[1]-b[1];});
-		// 		console.log(this.state.categoryRates);
-		// return 
+	// 	for(let i=0;i<sortable.length;i++){
+	// 		sortable[i]=sortable[i][0];
+	// 	}
+	// 	return sortable;
 
-	}
+	// }
 
-	setCategoryRates(rate,category){
-		let temp=this.state.categoryRates;
-		temp[category]=parseInt(rate);
-		this.setState({categoryRates:temp});	}
+	// setCategoryRates(rate,category){
+	// 	let temp=this.state.categoryRates;
+	// 	temp[category]=parseInt(rate);
+	// 	this.setState({categoryRates:temp});	}
 	
-	handleStateChange(event){
-		const name=event.target.name;
+	handleCityChange(event){
 		const value=event.target.value;
-		if(name==='city'){
 			this.setState({city:value})
-		}}
-
-	handleFromDateChange (date) {
-		let arr=this.state.setDate;
-		if((this.state.setDate.toDate.diff(date,'days'))<0){
-			arr.fromDate=date;
-			arr.toDate=date;
-		}
-		else{
-				arr.fromDate=date;
-			}
-			this.setState({setDate: arr});
-			this.journeyDays(arr.fromDate,arr.toDate);	
-			}
-
-	handleToDateChange (date) {
-		let temparr=this.state.setDate;
-		if((this.state.setDate.fromDate.diff(date,'days'))>0)
-		{
-			temparr.toDate=date;
-			temparr.fromDate=date;
-		}
-		else{
-				temparr.toDate=date;
-			}
-  		this.setState({setDate: temparr});
-  		this.journeyDays(temparr.fromDate,temparr.toDate);
 		}
 
-	journeyDays(fromD,toD){
-		let temp=toD.diff(fromD,'days')+1;
-		this.setState({journeyDays:temp});
-		}
+	// handleFromDateChange (date) {
+	// 	let arr=this.state.setDate;
+	// 	if((this.state.setDate.toDate.diff(date,'days'))<0){
+	// 		arr.fromDate=date;
+	// 		arr.toDate=date;
+	// 	}
+	// 	else{
+	// 			arr.fromDate=date;
+	// 		}
+	// 		this.setState({setDate: arr});
+	// 		this.journeyDays(arr.fromDate,arr.toDate);	
+	// 		}
+
+	// handleToDateChange (date) {
+	// 	let temparr=this.state.setDate;
+	// 	if((this.state.setDate.fromDate.diff(date,'days'))>0)
+	// 	{
+	// 		temparr.toDate=date;
+	// 		temparr.fromDate=date;
+	// 	}
+	// 	else{
+	// 			temparr.toDate=date;
+	// 		}
+ //  		this.setState({setDate: temparr});
+ //  		this.journeyDays(temparr.fromDate,temparr.toDate);
+	// 	}
+
+	// journeyDays(fromD,toD){
+	// 	let temp=toD.diff(fromD,'days')+1;
+	// 	this.setState({journeyDays:temp});
+	// 	}
 
 	componentWillReceiveProps(nextProps){
 				const newPlan=nextProps.plan;
@@ -205,7 +211,7 @@ class UserPlan extends Component{
 			<div className="form-group">
 			<label className="control-label col-sm-4" htmlFor="city">City :</label>
 			<div className="col-sm-6 col-lg-4 col-md-5">
-				<select className="form-control" name="city" onChange={this.handleStateChange}> 
+				<select className="form-control" name="city" onChange={this.handleCityChange}> 
 					<option value="mumbai">Mumbai</option>
 					<option value="paris">Paris</option>
 					<option value="london">London</option>
@@ -219,7 +225,7 @@ class UserPlan extends Component{
 			<label className="control-label col-sm-4" htmlFor="mySlider">Rate Categories :</label>
 			<div className="col-sm-8">
 				<div className="row">
-			<CategoryList setCategoryRates={this.setCategoryRates} getCategoryNames={this.getCategoryNames} city={this.state.city.toLowerCase()}/>
+			<CategoryList getCategoryNames={this.getCategoryNames}	addRemoveCategory={this.addRemoveCategories} city={this.state.city.toLowerCase()}/>
 			</div>
 			</div>
 			</div>
@@ -227,6 +233,7 @@ class UserPlan extends Component{
 			<label className="control-label col-sm-4" htmlFor="mySlider">Journey Duration :</label>		
 
 			<div className="col-lg-8 col-sm-8">
+						
 						<div className="RangeExample">
 			        {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
 			        {from && !to && <p>Please select the <strong>last day</strong>.</p>}
@@ -241,8 +248,14 @@ class UserPlan extends Component{
 			            {' '}
 			            {moment(to).format('L')}
 			            .
+			            {' '}
+			      		{this.state.journeyDays && <strong><span>{this.state.journeyDays} {this.state.journeyDays==1?<span> Day</span>:<span> Days</span>}</span></strong>}
+			            .
 			            {' '}<a href="." onClick={this.handleResetClick}>Reset</a>
-			          </p>}
+			            
+
+			          </p>
+			          	}
 			        <DayPicker
 			          numberOfMonths={2}
 			          selectedDays={[from, { from, to }]}
@@ -250,6 +263,7 @@ class UserPlan extends Component{
 			          fixedWeeks
 			        />
 			      </div>
+
 			      <div  id="displayDayError"></div>
 			</div>
 
@@ -275,11 +289,11 @@ class UserPlan extends Component{
 			return this.generatePlanRender();
 		}
 		else{
-			return (<div><div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-				<div  style={{height:"35px"}}><h3 >Your Plan</h3></div>
-				<div><button className="btn btn-primary" style={{height:"35px"}} onClick={this.goBack}>Go Back</button>&nbsp;
-				<button className="btn btn-primary" style={{height:"35px"}}>Explore</button></div></div><hr />
-				<Plan places={this.state.plan} /></div>);
+			return (<div><div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+				<button className="btn btn-primary" onClick={this.goBack}>Go Back</button>
+				<div  ><h2 >Your Plan</h2></div>
+				<button className="btn btn-primary" >Explore</button></div><hr style={{marginTop:"0px"}}/>
+				<Plan places={this.state.plan} fromDate={this.state.from} remaining={this.state.remaining} city={this.state.city} journeyDays={this.state.journeyDays} categories={this.state.categories} selectedCategories={this.state.selectedCategories}/></div>);
 		}
 	}
 

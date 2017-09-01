@@ -33,7 +33,11 @@ mix.webpackConfig({
 				{
     				test: /\.(png|jpg)$/,
     				loader: 'url?limit=25000'
-    			}
+    			},
+				{   			
+				    test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
+				    loader: 'file-loader',
+				}
 
 			]
 		},

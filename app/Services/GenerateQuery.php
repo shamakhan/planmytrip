@@ -69,4 +69,32 @@ class GenerateQuery
 
         return $query;
     }
+
+    public function getLocationsList($city, $topCategories){
+        $locations = new location();
+        $locations->setTable($city);
+        $selectCaseQuery = '';
+
+        for ($i=0; $i<sizeof($topCategories); $i++){
+            $selectCaseQuery = $selectCaseQuery.' (SELECT 
+            CASE 
+            WHEN b.categories LIKE \'%'.$topCategories[$i].'%\'
+            THEN 1
+            ELSE 0
+            END 
+            from '.$city.' as b
+            WHERE a.id = b.id) +';
+        }
+
+        $selectCaseQuery = substr($selectCaseQuery, 0, strlen($selectCaseQuery)-1);
+        $locationsList = \DB::select('SELECT *, '.$selectCaseQuery.'AS count
+        FROM '.$city.' AS a order by count desc');
+
+        for ($i=0; $i<sizeof($locationsList); $i++){
+            $locationsList[$i] = (array) $locationsList[$i];
+        }
+
+
+        return $locationsList;
+    }
 }

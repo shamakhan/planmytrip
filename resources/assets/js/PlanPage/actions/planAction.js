@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function fetchPlan(city,topCategories,days){
-	let temp=JSON.stringify(topCategories);
+	let temp=encodeURIComponent(JSON.stringify(topCategories));
 	return function(dispatch){
 		axios.get("/home/plan?city="+city+"&topCategories="+temp+"&days="+days)
 		.then((response) => {
@@ -29,6 +29,18 @@ export function fetchCategory(city){
 		})
 		.catch((err) => {
 			dispatch({type:"FETCH_CATEGORY_REJECTED",payload:err});
+		})
+	}
+}
+
+export function fetchLocThumbnail(city){
+	return function(dispatch){
+		axios.get("/getLocThumbnails?city="+"mumbai")
+		.then((response) => {
+			dispatch({type:"FETCH_LOCATIONTHUMBNAILS_FULFILLED", payload:response.data});
+		})
+		.catch((err) => {
+			dispatch({type:"FETCH_LOCATIONTHUMBNAILS_REJECTED",payload:err});
 		})
 	}
 }

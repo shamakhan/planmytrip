@@ -19,7 +19,7 @@ class TimeOperations
 
         if (empty($timePreferred) && $time == "timePreferred") {
             return false;
-        }elseif (empty($timePreferred) && $time != "timePreferred"){
+        }elseif ((empty($timePreferred) || $timePreferred=="24 hrs") && $time == "timeOpen"){
             return true;
         } else {
 
@@ -45,6 +45,9 @@ class TimeOperations
         $startTime += ((float)substr($time, 3, 2)) / 60;
 
         if (substr($time, 6, 2) == 'pm') {
+            if (floor($startTime) == 12) {
+                return $startTime;
+            }
             $startTime += 12;
         }
 
@@ -57,6 +60,9 @@ class TimeOperations
         $endTime += ((float)substr($time, 14, 2)) / 60;
 
         if (substr($time, 17, 2) == 'pm') {
+            if (floor($endTime) == 12) {
+                return $endTime;
+            }
             $endTime += 12;
         }
 

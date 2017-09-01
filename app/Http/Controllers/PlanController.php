@@ -19,8 +19,19 @@ class PlanController extends Controller
     public function createPlan(){
 
         $city =  Input::get('city');
-        $topCategories = Input::get('topCategories');
+        $topCategories = json_decode(Input::get('topCategories'));
         $days = Input::get('days');
+
+        $generateQuery = new GenerateQuery();
+        if($topCategories){
+            $topCategories=$topCategories;
+            $locations = $generateQuery->getLocationsList($city, $topCategories);
+
+        }else{
+             $locations = $generateQuery->getAllLocations($city)
+            ->get();
+            $locations = $locations->toArray();
+        }
         //$topCategories = $topCategories->toArray();
         /*$topCategories = array();
         $topCategories[0] = "Outdoors";
@@ -29,23 +40,25 @@ class PlanController extends Controller
         $topCategories[3] = "Religious Site";
         $topCategories[4] = "Landmark";*/
 
-        $generateQuery = new GenerateQuery();
+        /*$generateQuery = new GenerateQuery();
 
         if (empty($topCategories)){
             $locations = $generateQuery->getAllLocations($city)
             ->get();
         }else{
-            $locations = $generateQuery->orLikeQuery($city, $topCategories)
-                ->get();
-            $locations = $locations->toArray();
+            // $locations = $generateQuery->orLikeQuery($city, $topCategories)
+            //     ->get();
+            // $locations = $locations->toArray();
 
-            $locationsAppend = $generateQuery
-                ->notLikeQuery($city, $topCategories)
-                ->get();
-            $locationsAppend = $locationsAppend->toArray();
+            // $locationsAppend = $generateQuery
+            //     ->notLikeQuery($city, $topCategories)
+            //     ->get();
+            // $locationsAppend = $locationsAppend->toArray();
 
-            $locations = array_merge($locations, $locationsAppend);
+            // $locations = array_merge($locations, $locationsAppend);
+            $locations = $generateQuery->getLocationsList($city, $topCategories);
         }
+*/      
 
         $generatePlan = new GeneratePlan($locations, $days);
         $generatePlan->createTripPlan();
@@ -88,7 +101,7 @@ class PlanController extends Controller
         $city =  Input::get('city');
         $locations = new location();
         $locations->setTable($city);
-        $thumbnails = $locations->select('id', 'name', 'image', 'description')
+        $thumbnails = $locations->select('*')
 
             ->get();
         return $thumbnails->toArray();

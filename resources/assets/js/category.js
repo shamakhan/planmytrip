@@ -25,7 +25,7 @@ class category extends Component{
 	render() {
 		const {rating} =this.state;
 		return (
-		 <div className="col-lg-4 col-md-6 col-sm-10" style={{marginBottom:"20px"}}> <h4>{this.props.category} :</h4>
+		 <div className="col-lg-3 col-md-4 col-sm-6" style={{marginBottom:"20px"}}> <h5>{this.props.category} :</h5>
 			<div >
 			<StarRatingComponent 
                     name={this.props.index.toString()} 

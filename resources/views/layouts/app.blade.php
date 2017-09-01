@@ -78,5 +78,6 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js')}}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbSvTtVYjuyn4aHvbEbrT5Ww77QqZw1ow"></script>
 </body>
 </html>

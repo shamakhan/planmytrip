@@ -31,4 +31,6 @@ Route::get('/home/getCategories', ['uses' => 'PlanController@getCategories']);
 
 Route::get('/home/getLocDistance',['uses' => 'PlanController@getLocDistance']);
 
+Route::get('/home/getLocThumbnails', ['uses' => 'PlanController@getThumbnails']);
+
 //************************POST REQUESTS**************************************

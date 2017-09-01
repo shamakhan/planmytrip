@@ -6,12 +6,31 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 
-class categoryList extends Component {
+class CategoryList extends Component {
 	constructor(props){
 		super(props);
-		
+		this.handleCategoryClick=this.handleCategoryClick.bind(this);
+		this.getCategoriesList=this.getCategoriesList.bind(this);
 	}
 
+	handleCategoryClick(event){
+		event.preventDefault();
+		let targetCat=event.target;
+		let category=targetCat.innerHTML;
+		//console.log(category);
+		if(targetCat.classList.contains("active")){
+			targetCat.classList.remove("active");
+			targetCat.classList.remove("btn-info");
+			targetCat.classList.add("btn-default");
+			this.props.addRemoveCategory(category,"remove");
+		}
+		else{
+			targetCat.classList.remove("btn-default");
+			targetCat.classList.add("active");
+			targetCat.classList.add("btn-info");
+			this.props.addRemoveCategory(category,"add");
+		}
+	}
 	
 
 	// setCategoryRate(rate,i){
@@ -41,21 +60,27 @@ class categoryList extends Component {
 		}
 	}
 
-	
-	render(){
-		let categoryItems;
+	getCategoriesList(){
+		let categoryList;
 	if(this.props.categories){
 
-		categoryItems=this.props.categories.map( (category,i) => {
+		categoryList=this.props.categories.map((category,i) =>{
 			return (
-				<Category key={i}  category={category} index={i} setRate={this.props.setCategoryRates} />
+					<span key={i}><button className="btn btn-default" onClick={this.handleCategoryClick} style={{marginBottom:"8px"}}>{category}</button>&nbsp;&nbsp;&nbsp;</span>
 				);
-		} );
+		})
+
 			}
-		return ( <div>
-				{categoryItems}
+			return (<div>{categoryList}</div>);
+	}
+
+	
+	render(){
+		
+		return (
+				<div style={{width:"80%"}}>
+			{this.getCategoriesList()}
 			</div>
-			
 			);
 	}
 
@@ -72,4 +97,4 @@ function mapDispatchToProps(dispatch){
 	return bindActionCreators({fetchCategory:fetchCategory},dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(categoryList);
+export default connect(mapStateToProps,mapDispatchToProps)(CategoryList);

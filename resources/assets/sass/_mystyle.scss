@@ -115,8 +115,13 @@ div.polaroid-text {
 }
 
 div.polaroid {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom: 25px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 12px;
+}
+
+img.polaroid {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 12px;
 }
 
 
@@ -132,7 +137,7 @@ div.polaroid {
 .down-image{
  margin:0;
   background-image: url("/images/travel2.jpeg");
-  min-height: 500px;
+  min-height: 450px;
   width:100%;
   opacity: 1;
   background-position:center;
@@ -273,15 +278,17 @@ input[type=range].mySlider:focus::-ms-fill-upper {
 background-color:#fafafa;
   padding:5px;
   height:auto;
+  width:100%;
   margin-left:6px;
   margin-right:15px;
   margin-bottom:10px;
+  border-radius:10px;
 }
 
 .planPlaces > button{
   float:right;
-    margin-top:5px;
-    margin-right:8px;
+    margin-top:-2px;
+    margin-right:-2px;
     cursor:pointer;
     color: #fff;
     height: 2px;
@@ -307,8 +314,8 @@ background-color:#fafafa;
 
 
 .planImages{
-  width:180px;
-  height:160px;
+  width:100px;
+  height:90px;
 }
 
 .vertical-row {

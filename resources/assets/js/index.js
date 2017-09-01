@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import setupScrollReveal from './MainPage/components/scrollEffect';
+//import setupScrollReveal from './MainPage/components/scrollEffect';
 
 import {Provider} from 'react-redux';
 import store from './PlanPage/Store';
@@ -14,7 +14,7 @@ ReactDOM.render(
 		<App />
 	,document.querySelector('#mainpage'));
 
-setupScrollReveal();
+//setupScrollReveal();
 }
 if(document.querySelector('#plan'))
 	{
