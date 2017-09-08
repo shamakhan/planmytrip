@@ -120,4 +120,21 @@ class PlanController extends Controller
 
         return $redis;
     }
+
+    public function getCityThumbnails(){
+        $cities = \DB::table("cities")
+            ->select('city', 'image', 'country')
+            ->get();
+        $cities = $cities->toArray();
+        $citiesArray = array();
+        for ($i=0; $i<sizeof($cities); $i++){
+            $cities[$i] = (array)$cities[$i];
+            $cityName = strtolower($cities[$i]["city"]);
+            $cityName = str_replace(" ", "", $cityName);
+            $placesCount = \DB::table($cityName)->count();
+            $cities[$i]["locCount"] = $placesCount;
+        }
+
+        return $cities;
+    }
 }

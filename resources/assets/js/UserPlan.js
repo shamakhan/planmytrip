@@ -12,6 +12,12 @@ import {fetchPlan} from './PlanPage/actions/planAction';
 
 import Plan from './planList';
 
+import CityTumbnailList from './ExplorePage/cityThumbnailList';
+
+import FontAwesome from 'react-fontawesome';
+
+import FinalPlanList from './finalPlanList';
+
 
 
 
@@ -36,6 +42,7 @@ class UserPlan extends Component{
 						selectedCategories:[],
 						categories:["Family And Kids","Leisure","Religious Site","Walking Area","Entertainment","Outdoors","Landmark","Historical Site"],
 						plan:[],
+						temporary:[],
 						from:null,
 						to:null,
 					};
@@ -58,6 +65,61 @@ class UserPlan extends Component{
 
 					this.addRemoveCategories=this.addRemoveCategories.bind(this);
 
+					this.setCurrentPlan=this.setCurrentPlan.bind(this);
+
+					this.previousPlan=this.previousPlan.bind(this);
+
+					this.displayExplorePage=this.displayExplorePage.bind(this);
+
+					this.finalizePlan=this.finalizePlan.bind(this);
+					this.saveFinalPlan=this.saveFinalPlan.bind(this);
+
+					this.handleMaxDaysAlert=this.handleMaxDaysAlert.bind(this);
+
+		}
+
+		handleMaxDaysAlert(){
+			let temp=document.getElementById('alertBox');
+			temp.style.display=temp.style.display==='none'?'':'none';
+		}
+
+		finalizePlan(){
+			this.setState({finalized:true});
+		}
+
+		saveFinalPlan(){
+			let content;
+			let content2 = document.getElementById('stylesht').innerHTML;
+		    let mywindow = window.open('', 'Print', 'height=600,width=800');
+
+		    mywindow.document.write('<html><head>');
+		    mywindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">');
+		    mywindow.document.write( "<style>" );
+		    mywindow.document.write(content2);
+		    mywindow.document.write( "</style>" );
+		    mywindow.document.write('</head><body >');
+			content=document.querySelector('.finalPlan').innerHTML;
+		    	mywindow.document.write(content);
+		    mywindow.document.write('</body>');
+		    mywindow.document.write('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>')
+		    mywindow.document.write('</html>');
+
+		    mywindow.document.close();
+		    mywindow.focus()
+
+		    setTimeout(function(){mywindow.print();},1000);
+		    //mywindow.close();
+		    return true;
+		}
+
+		displayExplorePage(){
+			this.setState({explore:true});
+		}
+
+		setCurrentPlan(plan,remaining,temporary){
+			this.setState({plan:plan});
+			this.setState({remaining:remaining});
+			this.setState({temporary:temporary})
 		}
 
 		addRemoveCategories(category,operation){
@@ -71,9 +133,30 @@ class UserPlan extends Component{
 			this.setState({selectedCategories:temp});
 		}
 
+		previousPlan(){
+			let arr=this.state.plan;
+			let remain=this.state.remaining;
+			arr.push(remain);
+			this.handleDisplay(arr);
+		}
+
 		goBack(){
-			this.setState({isGeneratingPlan:true});
-			this.setState({city:'mumbai'});
+			if(this.state.explore && !this.state.isGeneratingPlan && !this.state.finalized){
+				
+				}
+			else if(!this.state.explore && !this.state.isGeneratingPlan && !this.state.finalized){
+				this.setState({isGeneratingPlan:true});
+				this.setState({cameBack:true});
+				this.setState({selectedCategories:[]});
+			}
+			else if(this.state.explore && this.state.isGeneratingPlan && !this.state.finalized){
+				
+				
+			}
+			else if(this.state.finalized){
+				this.setState({finalized:false});
+			}
+			this.setState({explore:false});
 		}
 
 	handleDayClick(day) {
@@ -102,6 +185,7 @@ class UserPlan extends Component{
 		this.setState({categories:temp});}
 
 	handleSubmit(){
+		this.setState({temporary:[]});
 		//event.target.preventDefault();
 		if(this.state.from && this.state.to && this.state.journeyDays){
 			//let topCategory=this.getRankedCategories();
@@ -124,71 +208,22 @@ class UserPlan extends Component{
 		this.setState({plan:plan});
 	}
 
-	// getRankedCategories(){
-	// 	let sortable=[];
-	// 	let arr=this.state.categoryRates;
-	// 	for(let cat in arr){
-	// 		if(arr[cat]>=6){
-	// 			sortable.push([cat,arr[cat]]);
-	// 		}
-	// 	}
-	// 	sortable.sort(function(a,b){
-	// 		return b[1]-a[1];
-	// 	});
-
-
-	// 	for(let i=0;i<sortable.length;i++){
-	// 		sortable[i]=sortable[i][0];
-	// 	}
-	// 	return sortable;
-
-	// }
-
-	// setCategoryRates(rate,category){
-	// 	let temp=this.state.categoryRates;
-	// 	temp[category]=parseInt(rate);
-	// 	this.setState({categoryRates:temp});	}
+	
 	
 	handleCityChange(event){
 		const value=event.target.value;
-			this.setState({city:value})
+			this.setState({city:value});
+			this.setState({cameBack:false});
 		}
 
-	// handleFromDateChange (date) {
-	// 	let arr=this.state.setDate;
-	// 	if((this.state.setDate.toDate.diff(date,'days'))<0){
-	// 		arr.fromDate=date;
-	// 		arr.toDate=date;
-	// 	}
-	// 	else{
-	// 			arr.fromDate=date;
-	// 		}
-	// 		this.setState({setDate: arr});
-	// 		this.journeyDays(arr.fromDate,arr.toDate);	
-	// 		}
+	
 
-	// handleToDateChange (date) {
-	// 	let temparr=this.state.setDate;
-	// 	if((this.state.setDate.fromDate.diff(date,'days'))>0)
-	// 	{
-	// 		temparr.toDate=date;
-	// 		temparr.fromDate=date;
-	// 	}
-	// 	else{
-	// 			temparr.toDate=date;
-	// 		}
- //  		this.setState({setDate: temparr});
- //  		this.journeyDays(temparr.fromDate,temparr.toDate);
-	// 	}
-
-	// journeyDays(fromD,toD){
-	// 	let temp=toD.diff(fromD,'days')+1;
-	// 	this.setState({journeyDays:temp});
-	// 	}
-
-	componentWillReceiveProps(nextProps){
+	componentWillUpdate(nextProps,nextState){
 				const newPlan=nextProps.plan;
-				if(newPlan !== this.props.plan){
+				if(nextState.plan!==this.state.plan){
+					this.setState({plan:nextState.plan});
+				}
+				else if(newPlan !== this.props.plan){
 					this.setState({plan:newPlan});
 					this.handleDisplay(newPlan);
 
@@ -200,18 +235,23 @@ class UserPlan extends Component{
 		const { from, to } = this.state;
 		return (
 				<div>
-				<div style={{display:"block"}}><button className="btn btn-primary" style={{float:"right",display:"inline"}}>Explore</button></div>
-<br/>
-				<hr /> 
-			<h4>Let's make your plan :</h4>
-			<h6>Select Appropriate choices</h6>
-			<div className="row">
-			<div className="col-sm-9 col-lg-12 col-md-9">
+				<div style={{display:"flex",flexDirection:"row"}}>
+				<div style={{flex:"auto",textAlign:"center"}}>
+					<h2>Let's make your plan</h2>
+				</div>
+				<div style={{flex:"initial"}}>
+				{this.state.cameBack && <button className="btn btn-primary" onClick={this.previousPlan}>View Previous Plan</button>}&nbsp;
+				<button className="btn btn-primary" onClick={this.displayExplorePage}>Explore</button></div>
+				</div>
+				<hr style={{marginTop:"0px"}}/> 
+				<div style={{width:"680px",margin:"auto",border:"1px solid rgba(0,0,0,0.1)"}} className="text-center">		
+					<h5>Select Appropriate choices</h5>
+			<div style={{display:"flex",flexDirection:"column",justifyContent:"center"}}>
 			<form className="form-horizontal">
 			<div className="form-group">
-			<label className="control-label col-sm-4" htmlFor="city">City :</label>
+			<label className="control-label col-sm-3" htmlFor="city">City :</label>
 			<div className="col-sm-6 col-lg-4 col-md-5">
-				<select className="form-control" name="city" onChange={this.handleCityChange}> 
+				<select className="form-control" name="city" onChange={this.handleCityChange} value={this.state.city}> 
 					<option value="mumbai">Mumbai</option>
 					<option value="paris">Paris</option>
 					<option value="london">London</option>
@@ -222,17 +262,17 @@ class UserPlan extends Component{
 			</div>
 
 			<div className="form-group">
-			<label className="control-label col-sm-4" htmlFor="mySlider">Rate Categories :</label>
-			<div className="col-sm-8">
+			<label className="control-label col-sm-3" htmlFor="mySlider">Select Categories :</label>
+			<div className="col-sm-9">
 				<div className="row">
 			<CategoryList getCategoryNames={this.getCategoryNames}	addRemoveCategory={this.addRemoveCategories} city={this.state.city.toLowerCase()}/>
 			</div>
 			</div>
 			</div>
-			<div className="form-group">
-			<label className="control-label col-sm-4" htmlFor="mySlider">Journey Duration :</label>		
+			<div className="form-group" style={{display:"flex",flexDirection:"row"}}>
+			<label className="control-label col-sm-3" htmlFor="mySlider">Journey Duration :</label>		
 
-			<div className="col-lg-8 col-sm-8">
+			<div>
 						
 						<div className="RangeExample">
 			        {!from && !to && <p>Please select the <strong>first day</strong>.</p>}
@@ -242,11 +282,11 @@ class UserPlan extends Component{
 			          <p>
 			            You chose from
 			            {' '}
-			            {moment(from).format('L')}
+			            {moment(from).format('DD/MM/YYYY')}
 			            {' '}
 			            to
 			            {' '}
-			            {moment(to).format('L')}
+			            {moment(to).format('DD/MM/YYYY')}
 			            .
 			            {' '}
 			      		{this.state.journeyDays && <strong><span>{this.state.journeyDays} {this.state.journeyDays==1?<span> Day</span>:<span> Days</span>}</span></strong>}
@@ -276,8 +316,9 @@ class UserPlan extends Component{
 			
 			</form>
 			</div>
+						</div>
 			</div>
-				</div>
+
 			);
 
 			}
@@ -285,15 +326,37 @@ class UserPlan extends Component{
 
 	render() {
 
-		if(this.state.plan===[] || this.state.isGeneratingPlan){
+		if(this.state.plan===[] || this.state.isGeneratingPlan && !this.state.explore){
 			return this.generatePlanRender();
 		}
-		else{
+		else if(!this.state.explore && !this.state.finalized){
 			return (<div><div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-				<button className="btn btn-primary" onClick={this.goBack}>Go Back</button>
-				<div  ><h2 >Your Plan</h2></div>
-				<button className="btn btn-primary" >Explore</button></div><hr style={{marginTop:"0px"}}/>
-				<Plan places={this.state.plan} fromDate={this.state.from} remaining={this.state.remaining} city={this.state.city} journeyDays={this.state.journeyDays} categories={this.state.categories} selectedCategories={this.state.selectedCategories}/></div>);
+				<button className="btn btn-primary" onClick={this.goBack}><FontAwesome name="arrow-left" /></button>
+				<div style={{fontFamily:"cursive",display:"inline-flex"}} ><h4 style={{lineHeight:"3.5em"}}>Your Plan for </h4>&nbsp;&nbsp;<h2> <b>{this.state.city.toUpperCase()}.</b></h2>&nbsp;&nbsp;<h4 style={{lineHeight:"3.5em"}}><FontAwesome name="calendar"/> {moment(this.state.from).format('DD/MM/YYYY')}  -  <FontAwesome name="calendar"/> {moment(this.state.from).add(this.state.plan.length-1,"days").format('DD/MM/YYYY')}</h4>&nbsp;
+				</div>
+				<div><button className="btn btn-primary" onClick={this.finalizePlan}>Finalize Plan</button>&nbsp;<button className="btn btn-primary" onClick={this.displayExplorePage}>Explore</button></div>
+				</div><hr style={{marginTop:"0px"}}/>
+				<Plan places={this.state.plan} fromDate={this.state.from} toDate={this.state.to} remaining={this.state.remaining} temporary={this.state.temporary} city={this.state.city} journeyDays={this.state.journeyDays} categories={this.state.categories} selectedCategories={this.state.selectedCategories} setCurrentPlan={this.setCurrentPlan}/></div>);
+		}
+		else if(!this.state.finalized){
+			return (<div>
+				<CityTumbnailList goBack={this.goBack}/>
+				</div>
+				);
+		}
+		else{
+			return (
+				<div>
+				<div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+				<button className="btn btn-primary" onClick={this.goBack}><FontAwesome name="arrow-left" /></button>
+				<div style={{fontFamily:"cursive",display:"inline-flex"}} ><h4 style={{lineHeight:"3.5em"}}>Your Final Plan for </h4>&nbsp;&nbsp;<h2> <b>{this.state.city.toUpperCase()}.</b></h2>&nbsp;&nbsp;<h4 style={{lineHeight:"3.5em"}}><FontAwesome name="calendar"/> {moment(this.state.from).format('DD/MM/YYYY')}  -  <FontAwesome name="calendar"/> {moment(this.state.from).add(this.state.plan.length-1,"days").format('DD/MM/YYYY')}</h4></div>
+				<div><button className="btn btn-primary" onClick={this.saveFinalPlan}>Print&nbsp;<FontAwesome name="print" /></button></div>
+				</div><hr style={{marginTop:"0px"}}/>
+				<div className="finalPlan">
+				<FinalPlanList date={this.state.from} plan={this.state.plan} />
+				</div>
+				</div>
+				);
 		}
 	}
 

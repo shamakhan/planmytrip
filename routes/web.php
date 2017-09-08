@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/landing',function(){
+	return view('landingPage');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -31,6 +35,8 @@ Route::get('/home/getCategories', ['uses' => 'PlanController@getCategories']);
 
 Route::get('/home/getLocDistance',['uses' => 'PlanController@getLocDistance']);
 
-Route::get('/home/getLocThumbnails', ['uses' => 'PlanController@getThumbnails']);
+Route::get('/getLocThumbnails', ['uses' => 'PlanController@getThumbnails']);
+
+Route::get('/getCityThumbnails', ['uses' => 'PlanController@getCityThumbnails']);
 
 //************************POST REQUESTS**************************************

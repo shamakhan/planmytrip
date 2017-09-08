@@ -140,5 +140,23 @@ class TimeOperations
         return round($hours, 2);
     }
 
+    public function convertTo24Format($timeIn24){
+
+        $hour = floor($timeIn24);
+        $minutes = (int)(($timeIn24 - $hour) * 60);
+
+        $hour = sprintf("%02d", $hour);
+        $minutes = sprintf("%02d", $minutes);
+        return $hour.':'.$minutes;
+    }
+
+    public function addHourTo24Format($timeInString, $hours){
+        $currenHour = (int)substr($timeInString, 0, strpos($timeInString, ':'));
+        $currenHour += $hours;
+        $currenHour = sprintf("%02d", $currenHour);
+
+        return $currenHour.substr($timeInString, strpos($timeInString, ':'));
+    }
+
 
 }

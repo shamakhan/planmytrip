@@ -66,7 +66,7 @@ class CategoryList extends Component {
 
 		categoryList=this.props.categories.map((category,i) =>{
 			return (
-					<span key={i}><button className="btn btn-default" onClick={this.handleCategoryClick} style={{marginBottom:"8px"}}>{category}</button>&nbsp;&nbsp;&nbsp;</span>
+					<span key={i}><button className="btn btn-sm btn-default" onClick={this.handleCategoryClick} style={{marginBottom:"8px"}}>{category}</button>&nbsp;&nbsp;</span>
 				);
 		})
 

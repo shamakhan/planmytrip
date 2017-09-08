@@ -220,7 +220,7 @@ $nextLocationToGo = null;
    private function addToDayPlan($location, $currentTime, $currentTravelTime, $currentDistance){
        $timeOp = new TimeOperations();
 
-       $location["timeArrival"] = $currentTime;
+       $location["timeArrival"] = $timeOp->convertTo24Format($currentTime);
        $location["timeTravel"] = $timeOp->getTimeInString((float)$currentTravelTime);
        $location["ditanceTravel"] = $currentDistance;
        array_push($this->locationPlan, $location);
@@ -235,11 +235,12 @@ $nextLocationToGo = null;
        //$tempLocation = array_splice($this->locationPlan, sizeof($this->locationPlan)-1, 1, $currentLocation);
        //var_dump($tempLocation);
        //array_push($this->locationPlan, $tempLocation);
+      $timeOp = new TimeOperations();
        array_push($this->locationPlan, $this->locationPlan[sizeof($this->locationPlan)-1]);
 
        $this->locationPlan[sizeof($this->locationPlan)-2]["name"] = "lunch";
-       $this->locationPlan[sizeof($this->locationPlan)-2]["timeArrival"] = $currentTime;
-       $this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] = (float)($this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] + 1);
+       $this->locationPlan[sizeof($this->locationPlan)-2]["timeArrival"] = $timeOp->convertTo24Format($currentTime);
+       $this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"] = $timeOp->addHourTo24Format($this->locationPlan[sizeof($this->locationPlan)-1]["timeArrival"], 1);
 
    }
 

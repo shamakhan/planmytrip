@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
-@section('navbarBrand')
-<a class="navbar-brand" href="">
-                        {{ config('app.name', 'Plan My Trip') }}
-                    </a>
-@endsection
 
 @section('content')
-<div class="container">
+<div class="container" style="width:100%;margin-top: 2px;min-height: 100%;position: relative;">
 
     <div id="plan"></div>
 </div>

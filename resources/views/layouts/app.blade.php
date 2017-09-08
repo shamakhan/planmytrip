@@ -14,9 +14,133 @@
     <!-- Styles -->
     
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <style type="text/css" id="stylesht">
+            img.polaroid {
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+          margin-bottom: 12px;
+        }
+        div.polaroid {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 12px;
+}v
+
+        .planPlaces{
+background-color:#fafafa;
+  padding:5px;
+  height:auto;
+  width:100%;
+  margin-left:6px;
+  margin-right:15px;
+  margin-bottom:10px;
+  border-radius:10px;
+  cursor:grab;
+}
+
+
+.planPlaces > button{
+  float:right;
+    margin-top:-2px;
+    margin-right:-2px;
+    cursor:pointer;
+    color: #fff;
+    height: 2px;
+    border: 1px solid #AEAEAE;
+    border-radius: 10px;
+    background: #605F61;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 5px 2px; 
+    white-space:nowrap;
+    overflow:inherit;
+}
+.planPlaces > button:before {
+    content: "×";
+}
+
+.planPlace a:hover{
+  
+  cursor:pointer;
+}
+
+
+.planImages{
+  width:100px;
+  height:90px;
+}
+
+.vertical-row {
+ height:30px;
+ width:10px;
+ background-color: #c9c9c9;
+} 
+
+.vertical-row-parent{
+  display:inline-flex;
+}
+
+.vertical-row-parent h5{
+  margin-left:12px;
+  color:#808080;
+}
+
+
+@media print {
+    #noPrint {
+        display: none;
+    }
+
+    #placeInfos{
+        width:90%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-left: 2%;
+    }
+
+    #planInfoParent{
+        height:15%;
+    }
+    
+
+
+    .myplan{
+        page-break-inside: avoid;
+    }
+
+    .perDayPage{
+        display: block;
+        float:none !important;
+        page-break-after: always;
+    }
+
+    #buttonCross{
+        visibility: hidden;
+    }
+
+    #ratingInfos{
+        visibility: hidden;
+    }
+}
+
+
+    </style>
+<style type="text/css">
+    .navbar-default {
+    background-color: #e6e9ea;
+    border-color: #d3e0e9;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
+    padding-bottom: -15px; 
+}
+
+</style>
+@yield('styles');
+
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -29,7 +153,11 @@
                     </button>
 
                     <!-- Branding Image -->
-                    @yield('navbarBrand')
+                    <div style="display: flex;flex-direction: row;">
+                    <img src="/images/logo.png" style="height: 30px;margin-top: 5px;">&nbsp;<a class="navbar-brand" href="">
+                        {{ config('app.name', ' Plan My Trip') }}
+                    </a>
+                    </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -70,11 +198,19 @@
             </div>
         </nav>
 <br/><br/><br/>
+<div style="display: flex;flex-direction: column;justify-content: space-between;min-height: 91.9%">
     <div id="app">
         
 
         @yield('content')
-    </div>
+    </div><br/>
+
+   <footer class="container-fluid" style="color:lightgrey;bottom: 0;display: flex;flex-direction: row;z-index:2;justify-content: space-between;background-color: rgba(0,0,0,0.9    );width:100%">
+     <p style="text-align:center">Copyright© PlanMyTrip.Com</p>
+   
+</footer>
+</div>
+
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js')}}"></script>

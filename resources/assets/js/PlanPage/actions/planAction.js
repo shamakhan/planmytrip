@@ -35,12 +35,24 @@ export function fetchCategory(city){
 
 export function fetchLocThumbnail(city){
 	return function(dispatch){
-		axios.get("/getLocThumbnails?city="+"mumbai")
+		axios.get("/getLocThumbnails?city="+city)
 		.then((response) => {
 			dispatch({type:"FETCH_LOCATIONTHUMBNAILS_FULFILLED", payload:response.data});
 		})
 		.catch((err) => {
 			dispatch({type:"FETCH_LOCATIONTHUMBNAILS_REJECTED",payload:err});
+		})
+	}
+}
+
+export function fetchCityThumbnail(){
+	return function(dispatch){
+		axios.get("/getCityThumbnails")
+		.then((response) => {
+			dispatch({type:"FETCH_CITYTHUMBNAILS_FULFILLED", payload:response.data});
+		})
+		.catch((err) => {
+			dispatch({type:"FETCH_CITYTHUMBNAILS_REJECTED",payload:err});
 		})
 	}
 }

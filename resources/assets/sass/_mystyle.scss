@@ -14,6 +14,17 @@ html, body {
               overflow-x:hidden; 
             }
 
+.affix {
+    top:50px;
+    position:fixed;
+}
+
+.navbar-brand>img{
+  height:100%;
+  padding:15px;
+  width:auto;
+}
+
 /* Top image */
         .pimg {
             margin:0;
@@ -274,6 +285,32 @@ input[type=range].mySlider:focus::-ms-fill-upper {
   width:30%;
 }
 
+.calendar{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  flex-wrap:nowrap;
+  justify-content:space-between;
+  height:65px;
+  width:70px;
+  margin-top:10px;
+  background-color:#fafafa;
+  border-radius:4px;
+  border:1px solid rgba(0,0,0,0.2);
+}
+
+.calendar>.month{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  width:100%;
+  height:16px;
+  border-radius:4px 4px 0px 0px;
+  background-color:#d9534f;
+  color:white;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
 .planPlaces{
 background-color:#fafafa;
   padding:5px;
@@ -283,7 +320,9 @@ background-color:#fafafa;
   margin-right:15px;
   margin-bottom:10px;
   border-radius:10px;
+  cursor:grab;
 }
+
 
 .planPlaces > button{
   float:right;
@@ -308,8 +347,8 @@ background-color:#fafafa;
 }
 
 .planPlace a:hover{
+  
   cursor:pointer;
-  cursor:hand;
 }
 
 
@@ -331,4 +370,359 @@ background-color:#fafafa;
 .vertical-row-parent h5{
   margin-left:12px;
   color:#808080;
+}
+
+.otherPlaces{
+  display:flex;
+  flex-direction:rpw;
+  width:100%;
+  cursor:grab;
+}
+
+.otherPlaces>.placeImage{
+  height:65px;
+  cursor:pointer;
+}
+
+.otherPlaces>.placeImage>img{
+  width:55px;
+  height:50px;
+}
+
+.otherPlaces>.placeName{
+  height:65px;
+  word-wrap:break-word;
+  margin-top:-8px;
+}
+
+.otherPlaces>.placeName>h5{
+  margin-bottom:-5px;
+  cursor:pointer;
+}
+
+.otherPlaces:hover{
+  background-color:rgba(255,255,51,0.2);
+}
+
+.modalBody{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.tours-dest-cont {
+    height: 100%;
+    width: 100%;
+}
+
+.tours-dest-cont {
+    position: relative;
+    box-shadow: -1px 1px 3px 0 #aaa;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.places-list-a {
+    color: #2b99b6;
+    text-decoration: none;
+    outline: 0;
+}
+
+.places-list-a {
+    background: transparent;
+    cursor: pointer;
+}
+
+.places-list-a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: auto;
+    text-decoration: underline;
+}
+
+.places-list li {
+    border: 1px solid #d0d0d0;
+    float: left;
+    height: 210px;
+    margin: 0 20px 30px 0;
+    cursor: pointer;
+    width: 265px;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.places-list li {
+    list-style: none;
+    float: left;
+    margin: 0 20px 20px 0;
+}
+
+.places-list {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+.places-list {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+.tour-dest-details {
+    background: #fff none repeat scroll 0 0;
+    bottom: 0;
+    height: 40px;
+    left: 2.5%;
+    padding: 0 10px;
+    position: absolute;
+    width: 95%;
+}
+.tour-dest-name {
+    color: #3232ff;
+    display: block;
+    font-size: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+}
+
+.tour-dest-name {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.dest-tour-count {
+    background: rgba(0,0,0,0) repeat scroll 0 99px / 40px 100px;
+    bottom: 0;
+    color: #fff;
+    height: 80px;
+    line-height: 30px;
+    padding: 40px 2.5% 0;
+    position: absolute;
+    width: 100%;
+}
+.lazy-load {
+    opacity: 0;
+}
+.tour-dest-img-wrap img{
+  transition: opacity 0.3s ease-in; 
+  opacity: 1;
+}
+.tour-dest-cover {
+    filter: brightness(60%);
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+}
+.tour-dest-cover:hover {
+  filter: brightness(40%);
+}
+.places-list-img {
+    vertical-align: middle;
+    border: 0;
+}
+
+.tour-dest-img-wrap {
+    color: #fff;
+    height: 175px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.tours-attraction-city-name {
+    background: #f86860 none repeat scroll 0 0;
+    border-radius: 5px 0 0 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1px 8px;
+    position: absolute;
+    right: -2px;
+    top: 10px;
+    z-index: 1;
+}
+.tours-attraction-city-name {
+    background: #f86860 none repeat scroll 0 0;
+    border-radius: 5px 0 0 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1px 8px;
+    position: absolute;
+    right: -2px;
+    top: 10px;
+    z-index: 1;
+}
+
+.dest-tour-count>span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.grid {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 0 0 0;
+  width: 100%;
+  list-style: none;
+
+}
+
+/* Common style */
+.grid figure {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  overflow: hidden;
+  margin: -1.2em;
+  width: 280px;
+  height: 250px;
+  background: #3085a3;
+  text-align: center;
+  cursor: pointer;
+}
+
+.grid figure img {
+  position: relative;
+  display: block;
+  min-height: 100%;
+  opacity: 0.8;
+}
+
+.grid figure figcaption {
+  padding: 1.2em;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1em;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+  pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+.grid figure a {
+  z-index: 1000;
+  text-indent: 200%;
+  white-space: nowrap;
+  font-size: 0;
+  opacity: 0;
+}
+
+.grid figure h3 {
+  word-spacing: -0.15em;
+  
+  font-weight: 150;
+}
+
+.grid figure h3 span {
+  font-weight: 700;
+}
+
+.grid figure h3,
+.grid figure p {
+  margin: 0;
+}
+
+.grid figure p {
+  letter-spacing: 1px;
+  font-size: 68.5%;
+}
+
+
+figure.effect-bubba {
+  background: black;
+  margin-left : 30px;
+  margin-top: 20px;
+}
+
+figure.effect-bubba img {
+  opacity: 0.7;
+  -webkit-transition: opacity 0.35s;
+  transition: opacity 0.35s;
+}
+
+figure.effect-bubba:hover img {
+  opacity: 0.4;
+}
+
+figure.effect-bubba figcaption::before,
+figure.effect-bubba figcaption::after {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  content: '';
+  opacity: 0;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+figure.effect-bubba figcaption::before {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: scale(0,1);
+  transform: scale(0,1);
+}
+
+figure.effect-bubba figcaption::after {
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
+  -webkit-transform: scale(1,0);
+  transform: scale(1,0);
+}
+
+figure.effect-bubba h3 {
+  padding-top: 20%;
+  -webkit-transition: -webkit-transform 0.35s;
+  transition: transform 0.35s;
+  -webkit-transform: translate3d(0,-20px,0);
+  transform: translate3d(0,-20px,0);
+}
+
+figure.effect-bubba p {
+  padding: 20px 2.5em;
+  opacity: 0;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  transition: opacity 0.35s, transform 0.35s;
+  -webkit-transform: translate3d(0,20px,0);
+  transform: translate3d(0,20px,0);
+}
+
+figure.effect-bubba:hover figcaption::before,
+figure.effect-bubba:hover figcaption::after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+figure.effect-bubba:hover h3,
+figure.effect-bubba:hover p {
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }

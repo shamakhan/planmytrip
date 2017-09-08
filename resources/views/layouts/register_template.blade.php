@@ -27,12 +27,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('age') ? ' has-error' : '' }}">
                             <label for="age" class="col-md-4 control-label">
                             Age</label>
 
                             <div class="col-md-6">
                                 <input type="number" name="age" class="form-control" value="{{ old('age') }}" required>
+
+                                @if ($errors->has('age'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('age') }}</strong>
+                                    </span>
+                                @endif
 
                             </div>
                         </div>
